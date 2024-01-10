@@ -51,7 +51,8 @@ const BoardList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 5;
 
-  // 현재 페이지에 해당하는 데이터만을 가져오기
+  //페이지 네이션
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = dummyData.slice(indexOfFirstPost, indexOfLastPost);
