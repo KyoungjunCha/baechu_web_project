@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import BoardList from "./components/BoardList";
 import "./index.css";
-import MyCommentList from "./pages/MyCommentList";
+import MyPostList from "./pages/MyPostList";
 
 const App = () => {
   return (
@@ -13,7 +13,7 @@ const App = () => {
       <div className="centerText">
         <p>invisible something</p>
       </div>
-      <MyCommentList/>
+      <MyPostList/>
       {/* <BoardList /> */}
       <Footer />
     </div>

@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import imageIcon from '../images/imgy.png';
 import noImageIcon from '../images/imgn.png';
 import trashIcon from '../images/trashcan-icon-white.png';
-import './MyCommentList.css';
-import dummyData from './CommentDummy'
+import './MyPostList.css';
+import dummyData from './PostDummy'
 
 const pageSize = 5; // 한 페이지당 아이템 수를 5로 변경
 
-export default function MyCommentList() {
+export default function MyPostList() {
   const [selectAllChecked, setSelectAllChecked] = useState(false);
   const [checkboxStates, setCheckboxStates] = useState(
     dummyData.reduce((acc, curr) => {
@@ -46,10 +46,11 @@ export default function MyCommentList() {
   const currentPageData = dummyData.slice(startIndex, endIndex);
 
   return (
-    <div className='myComment'>
-      <div className='myCommentHeader'>
+    <div className='myPost'>
+      <div className='myPostHeader'>
         <input
           type='checkbox'
+          style={{width:'20px', height:'20px'}}
           checked={selectAllChecked}
           onChange={handleSelectAllChange}
         />
@@ -61,19 +62,20 @@ export default function MyCommentList() {
         />
       </div>
       {currentPageData.map((e) => (
-        <div key={e.id} className='myCommentList'>
+        <div key={e.id} className='myPostList'>
           <input
             type='checkbox'
+            style={{width:'30px', height:'30px'}}
             checked={checkboxStates[e.id]}
             onChange={() => handleCheckboxChange(e.id)}
           />
           {e.hasImage ?
-            <img style={{ marginLeft: '20px' }} src={imageIcon} alt="이미지 첨부됨" className="board-icon" /> :
-            <img style={{ marginLeft: '20px' }} src={noImageIcon} alt="이미지 첨부 안됨" className="board-icon" />
+            <img src={imageIcon} alt="이미지 첨부됨" className="board-img" /> :
+            <img src={noImageIcon} alt="이미지 첨부 안됨" className="board-img" />
           }
           <div style={{ marginLeft: '20px' }}>
             <div className='title'>글제목: {e.title}</div>
-            <div className='creatDate'>{e.date} 작성자:{e.author}</div>
+            <div className='detail'>{e.detail}</div>
           </div>
         </div>
       ))}
