@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import imageIcon from '../images/imgy.png';
 import noImageIcon from '../images/imgn.png';
 import trashIcon from '../images/trashcan-icon-white.png';
-import './MyPostList.css';
+import './MyCommentList.css';
 import dummyData from './PostDummy'
 
 const pageSize = 5; // 한 페이지당 아이템 수를 5로 변경
 
-export default function MyPostList() {
+export default function MyCommentList() {
   const [selectAllChecked, setSelectAllChecked] = useState(false);
   const [checkboxStates, setCheckboxStates] = useState(
     dummyData.reduce((acc, curr) => {
@@ -46,8 +46,8 @@ export default function MyPostList() {
   const currentPageData = dummyData.slice(startIndex, endIndex);
 
   return (
-    <div className='myPost'>
-      <div className='myPostHeader'>
+    <div className='myComment'>
+      <div className='myCommentHeader'>
         <input
           type='checkbox'
           checked={selectAllChecked}
@@ -61,7 +61,7 @@ export default function MyPostList() {
         />
       </div>
       {currentPageData.map((e) => (
-        <div key={e.id} className='myPostList'>
+        <div key={e.id} className='myCommentList'>
           <input
             type='checkbox'
             checked={checkboxStates[e.id]}
@@ -77,7 +77,7 @@ export default function MyPostList() {
           </div>
         </div>
       ))}
-      <div className="pagination">
+      <div style={{marginBottom:'10px'}} className="pagination">
         {Array.from({ length: totalPages }, (_, index) => (
           <button
             key={index + 1}
