@@ -1,0 +1,70 @@
+.commentAlarm{
+    position: absolute;
+    width: 100%;
+    max-width: 700px;
+    margin-top: 10px;
+    margin-bottom: 500px;
+
+    left: 50%;
+    transform: translate(-50%, 0);
+
+    background-color: white;
+    border: 1px solid #5c5353;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.commentAlarmHeader{
+    padding-left: 10px;
+    background-color: #2675cf;
+    margin-top: 20px;
+
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.totalfont{
+    margin-left: 10px;
+
+    color: white;
+    font-size: 25px;
+}
+
+.commentAlarmList{
+    margin-top: 10px;
+    margin-left: 50px;
+    margin-bottom: 10px;
+
+    left: 50%;
+
+    display: flex;
+    align-items: center;
+    /* border: 1px solid rgb(32, 32, 32); */
+}
+
+.board-img{
+    width: 100px;
+    height: 100px;
+
+    margin-left: 20px;
+}
+
+.title{
+    height: 50px;
+    width: 350px;
+
+    font-size: large;
+    border: 1px solid rgb(32, 32, 32);
+
+    display: flex;           /* Flexbox 레이아웃 사용 */
+    align-items: center;      /* 수직 정렬을 중앙으로 설정 */
+    justify-content: center;  /* 수평 정렬을 중앙으로 설정 */
+}
+
+.creatDate{
+    word-spacing: 20px;
+}

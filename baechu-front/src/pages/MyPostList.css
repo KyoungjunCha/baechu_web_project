@@ -1,0 +1,76 @@
+.myPost{
+    position: absolute;
+    width: 100%;
+    max-width: 700px;
+    margin-bottom: 500px;
+
+    left: 50%;
+    transform: translate(-50%, 0);
+
+    background-color: white;
+    border: 1px solid #5c5353;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.myPostHeader{
+    padding-left: 10px;
+    background-color: #2675cf;
+    margin-top: 20px;
+
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.totalfont{
+    margin-left: 10px;
+
+    color: white;
+    font-size: 25px;
+}
+
+.myPostList{
+    margin-top: 10px;
+    margin-left: 50px;
+    margin-bottom: 10px;
+
+    left: 50%;
+
+    display: flex;
+    align-items: center;
+    /* border: 1px solid rgb(32, 32, 32); */
+}
+
+.title{
+    height: auto;
+    width: 300px;
+    padding: 5px;
+
+    font-weight: bold;
+    font-size: 20px;
+    /* border: 1px solid rgb(32, 32, 32); */
+}
+
+.board-img{
+    width: 100px;
+    height: 100px;
+
+    margin-left: 20px;
+}
+
+.detail{
+    white-space: normal;     /* 여러 줄을 허용 */
+    overflow: hidden;         /* 넘치는 부분을 숨김 */
+    text-overflow: ellipsis;  /* 넘치는 부분을 ...으로 표시 */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;    /* 원하는 표시할 줄 수 (적절한 값으로 변경) */
+    -webkit-box-orient: vertical;
+
+    padding: 2px;
+    width: 250px;             /* 원하는 너비로 지정 (적절한 값으로 변경) */
+    /* border: 1px solid rgb(32, 32, 32); */
+}
