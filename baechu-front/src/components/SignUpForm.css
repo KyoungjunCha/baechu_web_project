@@ -1,0 +1,71 @@
+.sign-up-form {
+  margin: 20px auto;
+  padding: 30px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  max-width: 400px;
+  background-color: #fff;
+}
+
+.sign-up-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.sign-up-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.sign-up-form button {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.sign-up-form button:hover {
+  background-color: #1769aa;
+}
+
+.input-with-button {
+  display: flex;
+  align-items: stretch; /* 변경된 부분 */
+}
+
+.input-with-button input {
+  flex: 1;
+  padding: 10px;
+  margin-right: 8px;
+  box-sizing: border-box;
+}
+
+.input-with-button button {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 10px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  height: 100%;
+}
+
+.birthday-select {
+  display: flex;
+}
+
+.birthday-select select {
+  flex: 1;
+  padding: 10px;
+  margin-right: 8px;
+  box-sizing: border-box;
+}
+
+.centerText {
+  text-align: center;
+}
