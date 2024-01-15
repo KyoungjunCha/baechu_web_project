@@ -1,11 +1,7 @@
 .myPost{
-    position: absolute;
-    width: 100%;
     max-width: 700px;
     margin-bottom: 500px;
-
-    left: 50%;
-    transform: translate(-50%, 0);
+    margin: 20px auto;
 
     background-color: white;
     border: 1px solid #5c5353;
