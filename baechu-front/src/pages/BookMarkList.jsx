@@ -3,8 +3,8 @@ import imageIcon from '../images/imgy.png';
 import noImageIcon from '../images/imgn.png';
 import trashIcon from '../images/trashcan-icon-white.png';
 import bookMarkIcon from '../images/bookMark.png'
-import './BookMarkList.css';
-import dummyData from './BookMarkDummy'
+import '../css/BookMarkList.css';
+import dummyData from '../dummy/BookMarkDummy'
 
 const pageSize = 5; // 한 페이지당 아이템 수를 5로 변경
 
