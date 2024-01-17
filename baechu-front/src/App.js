@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import BoardList from "./components/BoardList";
 import "./index.css";
 import PostWrite from "./pages/PostWrite";
+import MyCommentList from "./pages/MyCommentList";
 
 const App = () => {
   return (
@@ -13,8 +14,8 @@ const App = () => {
       <div className="centerText">
         <p>invisible something</p>
       </div>
-      <PostWrite/>
-      
+      {/* <PostWrite/> */}
+      <MyCommentList/>
       {/* <BoardList /> */}
       <Footer />
     </div>
