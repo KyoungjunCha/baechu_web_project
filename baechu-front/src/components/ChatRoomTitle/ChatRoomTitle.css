@@ -1,0 +1,31 @@
+/* ChatRoomTitle.css */
+
+.Titlewrap {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #f0f0f0; /* 배경색 설정 */
+    padding: 10px; /* 간격 설정 */
+  }
+  
+  button {
+    margin-left: 10px; /* 버튼 간격 설정 */
+    padding: 5px 10px; /* 버튼 내부 간격 설정 */
+  }
+  
+  /* 온라인 사용자 수 스타일 */
+  .onlineUsers {
+    margin-left: 10px; /* 간격 설정 */
+    color: #333; /* 글자색 설정 */
+  }
+  
+  /* 전체 채팅 수 스타일 */
+  .totalMessages {
+    margin-left: 10px; /* 간격 설정 */
+    color: white; /* 글자색 설정 */
+    background-color: red; /* 배경색 설정 */
+    border-radius: 50%; /* 원형 모양 설정 */
+    padding: 5px 10px; /* 내부 간격 설정 */
+    display: inline-block; /* 인라인 블록으로 설정하여 텍스트와 함께 표시 */
+  }
+  

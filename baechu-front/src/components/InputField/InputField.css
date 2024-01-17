@@ -2,9 +2,9 @@
     background-color: red;
     min-height:50px;
     display: flex;
-    position: absolute;
     bottom: 0;
     width: 100%;
+    position: sticky;
   }
   .plus-button{
     background-color: lightslategray;
