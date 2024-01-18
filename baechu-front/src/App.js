@@ -14,8 +14,8 @@ const App = () => {
       <div className="centerText">
         <p>invisible something</p>
       </div>
-      {/* <PostWrite/> */}
-      <MyCommentList/>
+      <PostWrite/>
+      {/* <MyCommentList/> */}
       {/* <BoardList /> */}
       <Footer />
     </div>
