@@ -33,6 +33,35 @@
   background-color: #1769aa;
 }
 
+.sign-up-form label select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* 선택된 도와 시에 대한 스타일 */
+.sign-up-form label select:disabled {
+  background-color: #f3f3f3;
+  color: #888;
+  cursor: not-allowed;
+}
+
+/* 기존 입력칸과 드롭다운 간의 간격 조정 */
+.sign-up-form label:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+/* 기존 입력칸 스타일 조정 */
+.sign-up-form input {
+  width: calc(100% - 22px);
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
 .input-with-button {
   display: flex;
   align-items: stretch; /* 변경된 부분 */
