@@ -1,0 +1,15 @@
+.TalkListDetailWrap{
+    margin: 0 auto;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    max-width: 700px;
+}
+
+.TalkList{
+    border: 1px solid red;
+}
+
+.item{
+    border: 1px solid green;
+}
