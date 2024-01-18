@@ -13,6 +13,9 @@ const SignUpForm = () => {
   const [birthMonth, setBirthMonth] = useState("");
   const [birthDay, setBirthDay] = useState("");
 
+  const [selectedProvince, setSelectedProvince] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+
   const handleSignUp = () => {
     if (password !== confirmPassword) {
       console.error("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
@@ -22,6 +25,23 @@ const SignUpForm = () => {
 
     // Implement your signup logic here
     console.log("Signing up...");
+  };
+
+  const provinces = [
+    "서울특별시",
+    "경기도",
+    "강원도",
+    "충청도",
+    "경상도",
+    "전라도",
+  ];
+  const cities = {
+    서울특별시: ["강남구", "강서구", "송파구", "마포구", "영등포구"],
+    경기도: ["수원시", "성남시", "용인시", "안양시", "부천시"],
+    강원도: ["춘천시", "원주시", "강릉시", "속초시", "동해시"],
+    충청도: ["청주시", "대전시", "충주시", "홍성군", "보령시"],
+    경상도: ["부산시", "대구시", "울산시", "창원시", "포항시"],
+    전라도: ["전주시", "광주시", "목포시", "순천시", "여수시"],
   };
 
   return (
@@ -87,13 +107,39 @@ const SignUpForm = () => {
         </div>
       </label>
       <label>
-        주소
-        <input
-          type="text"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
+        도
+        <select
+          value={selectedProvince}
+          onChange={(e) => {
+            setSelectedProvince(e.target.value);
+            setSelectedCity("");
+          }}
+        >
+          <option value="">도를 선택하세요</option>
+          {provinces.map((province) => (
+            <option key={province} value={province}>
+              {province}
+            </option>
+          ))}
+        </select>
       </label>
+
+      {selectedProvince && (
+        <label>
+          시
+          <select
+            value={selectedCity}
+            onChange={(e) => setSelectedCity(e.target.value)}
+          >
+            <option value="">시를 선택하세요</option>
+            {cities[selectedProvince].map((city) => (
+              <option key={city} value={city}>
+                {city}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
       <label>
         생년월일
         <div className="birthday-select">
