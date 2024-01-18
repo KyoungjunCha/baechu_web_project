@@ -1,15 +1,52 @@
-.TalkListDetailWrap{
+.TalkListDetailWrap {
     margin: 0 auto;
     text-align: center;
     justify-content: center;
     align-items: center;
     max-width: 700px;
-}
-
-.TalkList{
+  }
+  
+  .TalkList {
     border: 1px solid red;
-}
-
-.item{
+  }
+  
+  .item {
     border: 1px solid green;
-}
+    text-align: left;
+  }
+  
+  .detail-List {
+    border: 1px solid yellow;
+    display: flex;
+    align-items: center;
+  }
+  
+  .detail-List div {
+    flex: 1;
+    /* display: flex; */
+    /* align-items: center;
+    justify-content: center;
+    text-align: center; */
+  }
+  
+  .detail-List .category,
+  .detail-List .personnel {
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .detail-List img {
+    margin-left: auto;
+    max-width: 180px;
+  }
+  
+
+  
+  .Talkgraph {
+    width: 100%;
+    height: 100%;
+    border: 1px solid red;
+  }
+  
