@@ -46,7 +46,7 @@ export default function TalkPost() {
       </div>
       <div>
         <label>설명</label>
-        <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
+        <textarea className='TalkPost-Textarea' value={description} onChange={(e) => setDescription(e.target.value)} />
       </div>
       <div>
         <label>가격:</label>

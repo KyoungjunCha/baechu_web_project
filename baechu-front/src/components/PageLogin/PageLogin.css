@@ -19,7 +19,7 @@
     margin-bottom: 10px;
   }
   
-  .LoginForm {
+  .LoginFormPage {
     width: 200px;
     display: flex;
     flex-direction: column;
@@ -27,14 +27,15 @@
     margin-right: 20px;
   }
   
-  .LoginForm input {
+  .LoginFormPage input {
+    border: 1px solid gray;
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     box-sizing: border-box;
   }
   
-  .LoginForm button {
+  .LoginFormPage button {
     padding: 10px;
     background-color: #4caf50;
     color: white;

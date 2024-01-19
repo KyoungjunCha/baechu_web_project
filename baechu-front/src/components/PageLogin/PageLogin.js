@@ -42,7 +42,7 @@ const PageLogin = () => {
       {isLoggedIn ? (
         <UserProfile username={username} />
       ) : (
-        <div className="LoginForm">
+        <div className="LoginFormPage">
           {/* 로그인 폼 */}
           <input
             type="text"

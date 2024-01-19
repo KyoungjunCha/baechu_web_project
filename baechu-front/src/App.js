@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import TalkDetail from "./pages/TalkDetail/TalkDetail";
-import BoardList from "./pages/BoardList/BoardList";
+import BoardList from "./components/BoardList/BoardList";
 import PasswordRecoveryPage from "./pages/PasswordRecoveryPage/PasswordRecoveryPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
@@ -52,7 +52,7 @@ const App = () => {
           <Route path="/postWrite" element={<PostWrite />} />
           <Route path="/TalkPost" element={<TalkPost />} />
           <Route path="/list" element={<BoardList selectedCategory={selectedCategory} />} />
-          <Route path="/login" element={<PageLogin />} />
+          <Route path="/pagelogin" element={<PageLogin />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/" element={<BestList />} />
         </Routes>
