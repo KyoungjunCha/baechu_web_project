@@ -10,6 +10,16 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import TalkList from "./pages/TalkList/TalkList";
 import "./index.css";
 
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import BoardList from "./components/BoardList";
+import PrivacyChang from "./pages/PrivacyChang";
+import PostWrite from "./pages/PostWrite";
+import MyCommentList from "./pages/MyCommentList";
+import MyPostList from "./pages/MyPostList";
+import CommentAlarm from "./pages/CommentAlarm";
+import BookMarkList from "./pages/BookMarkList";
+
+
 const App = () => {
   return (
     <div className="page-content">
@@ -25,6 +35,12 @@ const App = () => {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/password-recovery" element={<PasswordRecoveryPage />} />
           <Route path="/Login" element={<LoginPage />} />
+          <Route path="/privacyChang" element = {<PrivacyChang/>}/>
+          <Route path="/myPostList" element = {<MyPostList/>}/>
+          <Route path="/myCommentList" element = {<MyCommentList/>}/>
+          <Route path="/commentAlarm" element = {<CommentAlarm/>}/>
+          <Route path="/bookMarkList" element = {<BookMarkList/>}/>
+          <Route path="/postWrite" element = {<PostWrite/>}/>
         </Routes>
         <Footer />
 

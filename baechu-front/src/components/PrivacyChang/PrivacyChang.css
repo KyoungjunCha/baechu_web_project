@@ -1,0 +1,148 @@
+.privacyChang{
+    max-width: 850px;
+    margin: 20px auto;
+
+    background-color: white;
+    border: 1px solid black;
+
+}
+
+.topPart{
+    height: 180px;
+    display: flex;
+
+    /* border-bottom: 1px solid black; */
+}
+
+.myImg{
+    margin-top: 20px;
+    margin-left: auto;
+
+    display: flex;
+    flex-direction: column; /* 세로 방향으로 아이템을 정렬합니다. */
+    align-items: center; /* 아이템을 세로 방향으로 가운데 정렬합니다. */
+    height: 100vh; /* 컨테이너의 높이를 화면 높이와 동일하게 설정합니다. */
+  
+    .profileImg{
+        width: 120px;
+        height: 120px;
+        
+        margin-left: auto;
+    }
+
+    .profileImgButton{
+        font-size: 15px;
+        color: white;
+        background-color: #3f51b5;
+        border: none;
+        border-radius: 5px;
+    }
+}
+
+.nickNameChang{
+    margin-top: 20px;
+    margin-left: 30px;
+    margin-right: auto;
+
+    .nickNameInput{
+        font-size: 20px;
+        margin-right: 10px;
+    }
+
+    .nickChangButton{
+        font-size: 18px;
+        color: white;
+        background-color: #3f51b5;
+        border: none;
+        border-radius: 5px;
+    }
+}
+
+.lowerPart{
+    height: 500px;
+
+    .navigationButton{
+        padding-top: 10px;
+        margin-left: 30px;
+        margin-right: 30px;
+
+        border-top: 1px solid black;
+    }
+
+    .privacybutton{
+        margin-right: 10px;
+
+        font-size: 18px;
+        color: white;
+        background-color: #3f51b5;
+        border: none;
+        border-radius: 5px;
+    }
+}
+
+.passwordChang{
+    padding-top: 25px;
+    padding-left: 100px;
+
+    .pwChangetitle{
+        margin-bottom: 10px;
+
+        border: none;
+    }
+
+    .pwChangeInput{
+        width: 400px;
+
+        padding: 10px;
+        margin-top: 10px;
+        margin-right: 10px;
+        font-size: 20px;
+    }
+
+    .pwChangebutton{
+        margin-top: 10px;
+
+        font-size: 23px;
+        color: white;
+        background-color: #3f51b5;
+        border: none;
+        border-radius: 5px;
+    }
+}
+
+.pwChange{
+    display: flex;
+    flex-direction: column; 
+}
+
+.addressChange{
+    padding-top: 25px;
+    padding-left: 100px;
+
+    .addressChangeTitle{
+        margin-bottom: 20px;
+    }
+
+    .addressChangeButton{
+        margin-top: 10px;
+        margin-left: 10px;
+
+        font-size: 23px;
+        color: white;
+        background-color: #3f51b5;
+        border: none;
+        border-radius: 5px;
+    }
+
+    .dropdownMenu{
+        margin-bottom: 10px;
+        margin-left: 10px;
+    }
+
+    .dropdownSelect{
+        margin-right: 10px;
+        padding: 5px;
+
+        font-size: 25px;
+    }
+}

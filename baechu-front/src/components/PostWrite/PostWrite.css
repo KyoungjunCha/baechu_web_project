@@ -1,0 +1,103 @@
+.postWrite{
+    max-width: 850px;
+    margin: 20px auto;
+
+    background-color: white;
+    /* border: 1px solid red; */
+}
+
+.postType{
+    padding: 10px;
+    display: flex;
+
+    .postWriteCategory{
+        width: 100px;
+        height: auto;
+
+        font-size: 20px;
+        padding: 5px;
+        text-align: center;
+
+        background-color: rgb(19, 86, 211);
+        font-weight: bold;
+        color: white;
+        border-radius: 10px; /* 모서리를 둥글게 만듦 */
+    }
+    
+    .dropdown{
+        margin-left: auto;
+    }
+
+    .dropdownSelect{
+        margin-right: 10px;
+        padding: 5px;
+
+        font-size: 20px;
+    }
+}
+
+.postWriteTitle{
+    width: 500px;
+    height: auto;
+
+    font-size: 24px;
+    margin: 10px;
+    padding: 5px;
+}
+
+.linkImg{
+    display: flex;
+
+    .board-img{
+        width: 50px;
+        height: 50px;
+    
+        margin-left: 20px;
+    }
+
+    .url{
+        width: 70px;
+        height: 45px;
+
+        font-size: 20px;
+        font-weight: bold;
+
+        color: white;
+        background-color: rgb(19, 86, 211);
+        border-radius: 10px;
+
+        text-align: center;
+        margin-left: 20px;
+    }
+}
+
+.postDetail {
+    width:800px;
+    height: 300px;
+    
+    padding-top: 10px;
+    margin: 10px;
+
+    font-size: 20px;
+  }
+
+.buttonStyle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .postWritebutton{
+        width: 140px;
+        height: 45px;
+        margin: 20px;
+
+        font-size: 20px;
+        font-weight: bold;
+
+        color: white;
+        background-color: rgb(19, 86, 211);
+        border-radius: 10px;
+
+        text-align: center;
+    }
+}
