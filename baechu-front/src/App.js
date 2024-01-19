@@ -1,14 +1,14 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter , Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import TalkDetail from "./pages/TalkDetail";
-import BoardList from "./components/BoardList";
+import BoardList from "./pages/BoardList";
 import PasswordRecoveryPage from "./pages/PasswordRecoveryPage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
-import "./index.css";
 import TalkList from "./pages/TalkList";
+import "./index.css";
 
 const App = () => {
   return (
@@ -24,8 +24,7 @@ const App = () => {
           <Route path="/TalkList" element={<TalkList />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/password-recovery" element={<PasswordRecoveryPage />} />
-          <Route path="/board" element={<BoardList />} />
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/Login" element={<LoginPage />} />
         </Routes>
         <Footer />
 

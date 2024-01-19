@@ -1,5 +1,5 @@
 import React from "react";
-import PasswordRecoveryForm from "../components/PasswordRecoveryForm";
+import PasswordRecoveryForm from "../components/PassWordRecoveryForm/PasswordRecoveryForm";
 
 const PasswordRecoveryPage = () => {
   return (
