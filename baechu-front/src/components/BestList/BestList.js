@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import imageIcon from '../../images/imgy.png';
 import noImageIcon from '../../images/imgn.png';
-import './BoardList.css';
+import './BestList.css';
 
 const BestList = () => {
   const dummyData = [

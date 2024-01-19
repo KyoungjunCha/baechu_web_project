@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -15,18 +15,30 @@ import MyPostList from "./pages/MyPostList";
 import CommentAlarm from "./pages/CommentAlarm";
 import BookMarkList from "./pages/BookMarkList";
 import TalkPost from "./pages/TalkPost/TalkPost";
+import PageLogin from "./components/PageLogin/PageLogin";
 import "./index.css";
+import Chat from "./components/Chat/Chat";
+import BestList from "./components/BestList/BestList";
 
 const App = () => {
+  // state 추가
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  // 카테고리 변경 핸들러 함수
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+  };
+
   return (
     <div className="page-content">
       <BrowserRouter>
-        <Header />
+        {/* Header에 선택된 카테고리 전달 */}
+        <Header onSelectCategory={handleCategoryChange} />
         <div className="centerText">
           <p>invisible something</p>
         </div>
         <Routes>
-          <Route path="/" element={<BoardList />} />
+          {/* 각 페이지에 대한 라우팅 */}
           <Route path="/TalkDetail" element={<TalkDetail />} />
           <Route path="/TalkList" element={<TalkList />} />
           <Route path="/signup" element={<SignUpPage />} />
@@ -39,6 +51,10 @@ const App = () => {
           <Route path="/bookMarkList" element={<BookMarkList />} />
           <Route path="/postWrite" element={<PostWrite />} />
           <Route path="/TalkPost" element={<TalkPost />} />
+          <Route path="/list" element={<BoardList selectedCategory={selectedCategory} />} />
+          <Route path="/login" element={<PageLogin />} />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/" element={<BestList />} />
         </Routes>
         <Footer />
       </BrowserRouter>
