@@ -22,7 +22,7 @@ const DropdownMenu = ({ data, onSelect }) => {
     <div className="dropdown">
       <div className="menu">
         <select
-          style={{ fontSize: '20px' }}
+          className='select'
           value={selectedProvince || ''}
           onChange={(e) => handleProvinceChange(e.target.value)}
         >
@@ -34,7 +34,7 @@ const DropdownMenu = ({ data, onSelect }) => {
         </select>
         {selectedProvince && (
           <select
-            style={{ fontSize: '20px' }}
+            className='select'
             value={selectedCity || ''}
             onChange={(e) => handleCityChange(e.target.value)}
           >
