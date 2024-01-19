@@ -10,7 +10,7 @@
     padding: 10px;
     display: flex;
 
-    .category{
+    .postWriteCategory{
         width: 100px;
         height: auto;
 
@@ -28,7 +28,7 @@
         margin-left: auto;
     }
 
-    .select{
+    .dropdownSelect{
         margin-right: 10px;
         padding: 5px;
 
@@ -36,7 +36,7 @@
     }
 }
 
-.title{
+.postWriteTitle{
     width: 500px;
     height: auto;
 
@@ -71,12 +71,12 @@
     }
 }
 
-.detail {
-    width: 800px; /* 충분한 너비로 조정 */
+.postDetail {
+    width:800px;
     height: 300px;
-
+    
+    padding-top: 10px;
     margin: 10px;
-    padding: 5px;
 
     font-size: 20px;
   }
@@ -86,7 +86,7 @@
     justify-content: center;
     align-items: center;
 
-    .button{
+    .postWritebutton{
         width: 140px;
         height: 45px;
         margin: 20px;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import imageIcon from '../images/imgy.png';
 import noImageIcon from '../images/imgn.png';
 import trashIcon from '../images/trashcan-icon-white.png';
-import '../css/MyPostList.css';
+import '../components/MyPostList/MyPostList.css';
 import dummyData from '../dummy/PostDummy'
 
 const pageSize = 5; // 한 페이지당 아이템 수를 5로 변경
@@ -54,7 +54,7 @@ export default function MyPostList() {
           checked={selectAllChecked}
           onChange={handleSelectAllChange}
         />
-        <div className='totalfont'>전체선택</div>
+        <div className='myPostTotalfont'>전체선택</div>
         <img 
           style={{ width: '50px', height: '50px', display: 'flex', marginLeft: 'auto', color:'white'}} 
           src={trashIcon} alt='전체삭제'
@@ -70,12 +70,12 @@ export default function MyPostList() {
             onChange={() => handleCheckboxChange(e.id)}
           />
           {e.hasImage ?
-            <img src={imageIcon} alt="이미지 첨부됨" className="board-img" /> :
-            <img src={noImageIcon} alt="이미지 첨부 안됨" className="board-img" />
+            <img src={imageIcon} alt="이미지 첨부됨" className="myPostImg" /> :
+            <img src={noImageIcon} alt="이미지 첨부 안됨" className="myPostImg" />
           }
           <div style={{ marginLeft: '20px' }}>
-            <div className='title'>글제목: {e.title}</div>
-            <div className='detail'>{e.detail}</div>
+            <div className='myPostTitle'>글제목: {e.title}</div>
+            <div className='myPostDetail'>{e.detail}</div>
           </div>
         </div>
       ))}

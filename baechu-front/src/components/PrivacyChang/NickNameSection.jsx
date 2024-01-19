@@ -2,15 +2,15 @@ import React from 'react'
 
 const NickNameSection = ({ nick, setNick, handleNickChange }) => {
     return (
-      <div className='nickName'>
+      <div className='nickNameChang'>
         <h2>닉네임</h2>
         <input
-          className='nick'
+          className='nickNameInput'
           placeholder='닉네임을 입력하세요'
           value={nick}
           onChange={(e) => setNick(e.target.value)}
         />
-        <button className='nickButton' onClick={handleNickChange}>닉네임 변경</button>
+        <button className='nickChangButton' onClick={handleNickChange}>닉네임 변경</button>
       </div>
     );
 };

@@ -21,13 +21,13 @@
     display: flex;
     align-items: center;
     margin-bottom: 8px;
-}
 
-.totalfont{
-    margin-left: 10px;
-
-    color: white;
-    font-size: 25px;
+    .myCommentTotalfont{
+        margin-left: 10px;
+    
+        color: white;
+        font-size: 25px;
+    }
 }
 
 .myCommentList{
@@ -40,16 +40,27 @@
     display: flex;
     align-items: center;
     /* border: 1px solid rgb(32, 32, 32); */
+
+    .myCommentTitle{
+        height: auto;
+        width: 300px;
+        padding: 5px;
+    
+        border: 1px solid rgb(32, 32, 32);
+    }
+    
+    .myCommentCreatDate{
+        word-spacing: 20px;
+    }
+    
+    .myCommentCheckBox{
+        width: 20px;
+        height: 20px;
+    }
+    
+    .myCommentIcon{
+        width: 80px;
+        height: 80px;
+    }
 }
 
-.title{
-    height: auto;
-    width: 300px;
-    padding: 5px;
-
-    border: 1px solid rgb(32, 32, 32);
-}
-
-.creatDate{
-    word-spacing: 20px;
-}

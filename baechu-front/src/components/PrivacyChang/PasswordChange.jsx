@@ -42,13 +42,13 @@ const PasswordChange = ({ password, setpassword }) => {
   };
 
   return (
-    <div className='password'>
+    <div className='passwordChang'>
       {/* 비밀번호 확인 부분 */}
       <div className='pwCheck'>
-        <h2 className='title'>*비밀번호 확인</h2>
+        <h2 className='pwChangetitle'>*비밀번호 확인</h2>
         <input
           type='password'
-          className='pw'
+          className='pwChangeInput'
           placeholder='기존 비밀번호를 입력하세요'
           value={currentPassword}
           onChange={(e) => setCurrentPassword(e.target.value)}
@@ -58,18 +58,18 @@ const PasswordChange = ({ password, setpassword }) => {
       </div>
 
       {/* 변경할 비밀번호 부분 */}
-      <div className='pwChang'>
-        <h2 className='title'>*변경할 비밀번호</h2>
+      <div className='pwChange'>
+        <h2 className='pwChangetitle'>*변경할 비밀번호</h2>
         <input
           type='password'
-          className='pw'
+          className='pwChangeInput'
           placeholder='새로운 비밀번호를 입력하세요'
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
         />
         <input
           type='password'
-          className='pw'
+          className='pwChangeInput'
           placeholder='새로운 비밀번호를 다시 입력하세요'
           value={confirmNewPassword}
           onChange={(e) => setConfirmNewPassword(e.target.value)}
@@ -80,7 +80,7 @@ const PasswordChange = ({ password, setpassword }) => {
         <p style={{ color: 'red' }}>비밀번호가 일치하지 않습니다.</p>
       )}
 
-      <button className='pwbutton' onClick={handlePasswordChange}>비밀번호 변경</button>
+      <button className='pwChangebutton' onClick={handlePasswordChange}>비밀번호 변경</button>
     </div>
   );
 };

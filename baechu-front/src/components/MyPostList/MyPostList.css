@@ -1,7 +1,7 @@
-.bookMark{
-    margin: 20px auto;
+.myPost{
     max-width: 700px;
     margin-bottom: 500px;
+    margin: 20px auto;
 
     background-color: white;
     border: 1px solid #5c5353;
@@ -12,23 +12,24 @@
     flex-direction: column;
 }
 
-.bookMarkHeader{
+.myPostHeader{
     padding-left: 10px;
     background-color: #2675cf;
+    margin-top: 20px;
 
     display: flex;
     align-items: center;
     margin-bottom: 8px;
 }
 
-.totalfont{
+.myPostTotalfont{
     margin-left: 10px;
 
     color: white;
     font-size: 25px;
 }
 
-.bookMarkList{
+.myPostList{
     margin-top: 10px;
     margin-left: 50px;
     margin-bottom: 10px;
@@ -40,7 +41,7 @@
     /* border: 1px solid rgb(32, 32, 32); */
 }
 
-.title{
+.myPostTitle{
     height: auto;
     width: 300px;
     padding: 5px;
@@ -50,14 +51,14 @@
     /* border: 1px solid rgb(32, 32, 32); */
 }
 
-.board-img{
+.myPostImg{
     width: 100px;
     height: 100px;
 
     margin-left: 20px;
 }
 
-.detail{
+.myPostDetail{
     white-space: normal;     /* 여러 줄을 허용 */
     overflow: hidden;         /* 넘치는 부분을 숨김 */
     text-overflow: ellipsis;  /* 넘치는 부분을 ...으로 표시 */

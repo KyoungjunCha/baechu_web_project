@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import imageIcon from '../images/imgy.png';
-import '../css/PrivacyChang.css';
+import '../components/PrivacyChang/PrivacyChang.css';
 
-import PasswordChange from '../components/PasswordChange';
-import ProfileImage from '../components/ProfileImage';
-import NickNameSection from '../components/NickNameSection';
+import PasswordChange from '../components/PrivacyChang/PasswordChange.jsx';
+import ProfileImage from '../components/PrivacyChang/ProfileImage.jsx';
+import NickNameSection from '../components/PrivacyChang/NickNameSection.jsx';
 import DropdownMenu from '../components/DropdownMenu ';
 
 import dummyData from '../dummy/CityDummy.js';
@@ -20,11 +20,11 @@ const AddressChange = () => {
   };
 
   return (
-    <div className='address'>
+    <div className='addressChange'>
       {/* 주소 변경 로직을 구현할 부분 */}
-      <h2 className='title'>*주소 변경</h2>
+      <h2 className='addressChangeTitle'>*주소 변경</h2>
       <DropdownMenu data={dummyData} onSelect={handleLocationChange} />
-      <button className='addessbutton'>주소 변경</button>
+      <button className='addressChangeButton'>주소 변경</button>
     </div>
   );
 };
@@ -70,8 +70,8 @@ export default function PrivacyChang() {
       </div>
       <div className='lowerPart'>
         <div className='navigationButton'>
-          <button className='button' onClick={handlePasswordChange}>비밀번호 변경</button>
-          <button className='button' onClick={handleAddressChange}>주소 변경</button>
+          <button className='privacybutton' onClick={handlePasswordChange}>비밀번호 변경</button>
+          <button className='privacybutton' onClick={handleAddressChange}>주소 변경</button>
         </div>
         {showPasswordChange && <PasswordChange />}
         {showAddressChange && <AddressChange />}
