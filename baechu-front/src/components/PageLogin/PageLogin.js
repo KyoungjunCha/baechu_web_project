@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './PageLogin.css';
 
 // 이미지 
-import userImage from '../images/user.png';
+import userImage from '../../images/user.png';
 
 const UserProfile = ({ username }) => (
   <div className="RightTop">

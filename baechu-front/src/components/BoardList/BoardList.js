@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import imageIcon from '../images/imgy.png';
-import noImageIcon from '../images/imgn.png';
+import imageIcon from '../../images/imgy.png';
+import noImageIcon from '../../images/imgn.png';
 import './BoardList.css';
 
 const BoardList = ({ selectedCategory }) => {

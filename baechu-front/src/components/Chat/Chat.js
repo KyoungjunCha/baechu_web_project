@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Chat.css';
-import chatIcon from '../images/user.png';
+import chatIcon from '../../images/user.png';
 
 const Chat = () => {
   const [showChat, setShowChat] = useState(true);
@@ -14,11 +14,35 @@ const Chat = () => {
     {
       id: 2,
       category: '음식',
-      roomName: '경기도 맛집 공유',
+      roomName: '경기도 맛집 공유', 
       unreadMessages: 9,
     },
     {
       id: 3,
+      category: '음식',
+      roomName: '붕어빵',
+      unreadMessages: 7,
+    },
+    {
+      id: 4,
+      category: '음식',
+      roomName: '붕어빵',
+      unreadMessages: 7,
+    },
+    {
+      id: 5,
+      category: '음식',
+      roomName: '붕어빵',
+      unreadMessages: 7,
+    },
+    {
+      id: 6,
+      category: '음식',
+      roomName: '붕어빵',
+      unreadMessages: 7,
+    },
+    {
+      id: 7,
       category: '음식',
       roomName: '붕어빵',
       unreadMessages: 7,
