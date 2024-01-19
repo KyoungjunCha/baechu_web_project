@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
-const Header = () => {
+const Header = ({ onSelectCategory }) => {
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+    onSelectCategory(category);
+  };
+
   return (
     <div className="header">
       <div className="top-line">
@@ -18,11 +25,11 @@ const Header = () => {
       </div>
       <div className="navigation-bar">
         <ul>
-          <li>미용</li>
-          <li>음식</li>
-          <li>관광</li>
-          <li>카페</li>
-          <li>스포츠</li>
+          <li onClick={() => handleCategoryClick("미용")}>미용</li>
+          <li onClick={() => handleCategoryClick("음식")}>음식</li>
+          <li onClick={() => handleCategoryClick("관광")}>관광</li>
+          <li onClick={() => handleCategoryClick("카페")}>카페</li>
+          <li onClick={() => handleCategoryClick("스포츠")}>스포츠</li>
         </ul>
       </div>
     </div>
