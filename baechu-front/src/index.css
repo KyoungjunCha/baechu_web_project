@@ -5,6 +5,9 @@ src/index.css body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 code {
@@ -80,16 +83,23 @@ body {
   color: #ff4081;
 }
 
+.page-content {
+  flex: 1;
+  /* display: flex;
+  flex-direction: column; */
+  padding-bottom: 100px;
+}
+
 .footer {
   background-color: #333;
   color: white;
   text-align: center;
   padding: 10px;
-  position: fixed;
-  bottom: 0;
   width: 100%;
+  bottom: 0;
+  position: fixed;
 }
 
-.centerText {
+/* .centerText {
   text-align: center;
-}
+} */

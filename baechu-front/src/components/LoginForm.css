@@ -1,0 +1,62 @@
+/* components/LoginForm.css */
+.login-form {
+  max-width: 300px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.login-form input {
+  width: calc(100% - 50px);
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f2f2f2;
+  padding-left: 40px; /* 아이콘 공간 확보를 위해 왼쪽 패딩 추가 */
+}
+
+.login-form .icon-container {
+  position: relative;
+}
+
+.login-form .icon-container i {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #777;
+  font-size: 18px;
+  height: 70%;
+}
+
+.login-form .links {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+.login-form .links a {
+  margin-right: 5px;
+}
+
+.login-form button {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.login-form button:hover {
+  background-color: #1769aa;
+}
