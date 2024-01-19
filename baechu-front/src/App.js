@@ -8,13 +8,14 @@ import PasswordRecoveryPage from "./pages/PasswordRecoveryPage/PasswordRecoveryP
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import TalkList from "./pages/TalkList/TalkList";
-import "./index.css";
 import PrivacyChang from "./pages/PrivacyChang";
 import PostWrite from "./pages/PostWrite";
 import MyCommentList from "./pages/MyCommentList";
 import MyPostList from "./pages/MyPostList";
 import CommentAlarm from "./pages/CommentAlarm";
 import BookMarkList from "./pages/BookMarkList";
+import TalkPost from "./pages/TalkPost/TalkPost";
+import "./index.css";
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
           <Route path="/commentAlarm" element={<CommentAlarm />} />
           <Route path="/bookMarkList" element={<BookMarkList />} />
           <Route path="/postWrite" element={<PostWrite />} />
+          <Route path="/TalkPost" element={<TalkPost />} />
         </Routes>
         <Footer />
       </BrowserRouter>
