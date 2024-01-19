@@ -20,9 +20,9 @@ const DropdownMenu = ({ data, onSelect }) => {
 
   return (
     <div className="dropdown">
-      <div className="menu">
+      <div className="dropdownMenu">
         <select
-          className='select'
+          className='dropdownSelect'
           value={selectedProvince || ''}
           onChange={(e) => handleProvinceChange(e.target.value)}
         >
@@ -34,7 +34,7 @@ const DropdownMenu = ({ data, onSelect }) => {
         </select>
         {selectedProvince && (
           <select
-            className='select'
+            className='dropdownSelect'
             value={selectedCity || ''}
             onChange={(e) => handleCityChange(e.target.value)}
           >

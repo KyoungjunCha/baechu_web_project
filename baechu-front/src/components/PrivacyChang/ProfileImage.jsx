@@ -6,10 +6,10 @@ const ProfileImage = ({ profilePicture, openFileInput, handleFileChange }) => {
         <img
             src={profilePicture}
             alt='프로필 이미지'
-            className="board-img"
+            className="profileImg"
             onClick={openFileInput}
         />
-        <button className='imgButton' onClick={openFileInput}>프로필 사진변경</button>
+        <button className='profileImgButton' onClick={openFileInput}>프로필 사진변경</button>
         <input
             type="file"
             id="fileInput"

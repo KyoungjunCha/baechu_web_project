@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import imageIcon from '../images/imgy.png';
 import noImageIcon from '../images/imgn.png';
 import trashIcon from '../images/trashcan-icon-white.png';
-import '../css/MyCommentList.css';
+import '../components/MyCommentList/MyCommentList.css';
 import dummyData from '../dummy/CommentDummy'
 
 const pageSize = 5; // 한 페이지당 아이템 수를 5로 변경
@@ -50,10 +50,11 @@ export default function MyCommentList() {
       <div className='myCommentHeader'>
         <input
           type='checkbox'
+          className='myCommentCheckBox'
           checked={selectAllChecked}
           onChange={handleSelectAllChange}
         />
-        <div className='totalfont'>전체선택</div>
+        <div className='myCommentTotalfont'>전체선택</div>
         <img 
           style={{ width: '50px', height: '50px', display: 'flex', marginLeft: 'auto', color:'white'}} 
           src={trashIcon} alt='전체삭제'
@@ -64,16 +65,17 @@ export default function MyCommentList() {
         <div key={e.id} className='myCommentList'>
           <input
             type='checkbox'
+            className='myCommentCheckBox'
             checked={checkboxStates[e.id]}
             onChange={() => handleCheckboxChange(e.id)}
           />
           {e.hasImage ?
-            <img style={{ marginLeft: '20px' }} src={imageIcon} alt="이미지 첨부됨" className="board-icon" /> :
-            <img style={{ marginLeft: '20px' }} src={noImageIcon} alt="이미지 첨부 안됨" className="board-icon" />
+            <img style={{ marginLeft: '20px' }} src={imageIcon} alt="이미지 첨부됨" className="myCommentIcon" /> :
+            <img style={{ marginLeft: '20px' }} src={noImageIcon} alt="이미지 첨부 안됨" className="myCommentIcon" />
           }
           <div style={{ marginLeft: '20px' }}>
-            <div className='title'>글제목: {e.title}</div>
-            <div className='creatDate'>{e.date} 작성자:{e.author}</div>
+            <div className='myCommentTitle'>글제목: {e.title}</div>
+            <div className='myCommentCreatDate'>{e.date} 작성자:{e.author}</div>
           </div>
         </div>
       ))}

@@ -3,7 +3,7 @@ import imageIcon from '../images/imgy.png';
 import youTubeIcon from '../images/free-icon-youtube.png';
 import postIcon from '../images/free-icon-bullet-point.png';
 import DropdownMenu from '../components/DropdownMenu ';
-import '../css/PostWrite.css';
+import '../components/PostWrite/PostWrite.css';
 
 import dummyData from '../dummy/CityDummy.js';
 import categoryOptions from '../dummy/Category.js'
@@ -39,7 +39,7 @@ export default function PostWrite() {
   return (
     <div className="postWrite">
       <div className='postType'>
-        <div className='category'>
+        <div className='postWriteCategory'>
           <label>카테고리:</label>
           <select
             value={selectedCategory}
@@ -57,7 +57,7 @@ export default function PostWrite() {
         <DropdownMenu data={dummyData} onSelect={handleLocationChange} />
       </div>
       <input
-        className='title'
+        className='postWriteTitle'
         placeholder='제목을 입력하세요'
         value={title}
         onChange={(e) => setTitle(e.target.value)}
@@ -69,7 +69,7 @@ export default function PostWrite() {
         <img src={postIcon} alt='글' className="board-img" onClick={{}} />
       </div>
       <textarea
-        className='detail'
+        className='postDetail'
         value={newPostContent}
         onChange={(e) => setNewPostContent(e.target.value)}
         placeholder="글을 작성하세요..."
@@ -77,9 +77,9 @@ export default function PostWrite() {
       <div className='board'></div>
       <div className='buttonStyle'>
         {/* 뒤로 가기 버튼 */}
-        <button className='button'>뒤로가기</button>
+        <button className='postWritebutton'>뒤로가기</button>
         {/* 작성하기 버튼 */}
-        <button className='button' onClick={handleWritePost}>
+        <button className='postWritebutton' onClick={handleWritePost}>
           작성하기
         </button>
       </div>
