@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import imageIcon from '../images/imgy.png';
-import noImageIcon from '../images/imgn.png';
-import trashIcon from '../images/trashcan-icon-white.png';
+import imageIcon from '../../images/imgy.png';
+import noImageIcon from '../../images/imgn.png';
+import trashIcon from '../../images/trashcan-icon-white.png';
 // import '../css/MyCommentList.css';
 import dummyData from '../../dummy/TalkList.dummy'
 import TalkListHeader from '../../components/TalkListHeader/TalkListHeader';

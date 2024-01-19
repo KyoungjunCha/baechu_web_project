@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import BoardList from "./pages/BoardList/BoardList";
 import TalkDetail from "./pages/TalkDetail/TalkDetail";
+import TalkPost from "./pages/TalkPost/TalkPost";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import "./index.css";
 import TalkList from "./pages/TalkList/TalkList";
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/" element = {<BoardList/>}/>
         <Route path="/TalkDetail" element={<TalkDetail />} />
         <Route path="/TalkList" element = {<TalkList/>}/>
+        <Route path="/TalkPost" element = {<TalkPost/>}/>
       </Routes>
       <Footer/>
       </BrowserRouter>

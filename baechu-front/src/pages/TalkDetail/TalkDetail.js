@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import MessageContainer from "../../components/MessageContainer/MessageContainer";
 import InputField from "../../components/InputField/InputField";
 import socket from "../../server";
-import "../pages/TalkDetail.css";
+import "./TalkDetail.css";
 import VoteField from "../../components/VoteField/VoteField";
 import ChatRoomTitle from "../../components/ChatRoomTitle/ChatRoomTitle";
 
