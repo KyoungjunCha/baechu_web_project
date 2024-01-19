@@ -2,11 +2,11 @@
 import React from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import BoardList from "./pages/BoardList";
-import TalkDetail from "./pages/TalkDetail";
+import BoardList from "./pages/BoardList/BoardList";
+import TalkDetail from "./pages/TalkDetail/TalkDetail";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import "./index.css";
-import TalkList from "./pages/TalkList";
+import TalkList from "./pages/TalkList/TalkList";
 
 const App = () => {
   return (
