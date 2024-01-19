@@ -20,12 +20,11 @@ const App = () => {
       <div>
         <Header onSelectCategory={handleCategoryChange} />
         <Routes>
-          <Route path="list" element={<BoardList selectedCategory={selectedCategory} />} />
+          <Route path="/list" element={<BoardList selectedCategory={selectedCategory} />} />
           <Route path="/login" element={<PageLogin />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/" element={<BestList />} />
         </Routes>
-
         <Footer />
       </div>
     </Router>
