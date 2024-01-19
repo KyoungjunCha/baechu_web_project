@@ -3,7 +3,7 @@
     margin: 20px auto;
 
     background-color: white;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .postType{
@@ -26,6 +26,13 @@
     
     .dropdown{
         margin-left: auto;
+    }
+
+    .select{
+        margin-right: 10px;
+        padding: 5px;
+
+        font-size: 20px;
     }
 }
 
