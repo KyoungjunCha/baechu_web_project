@@ -32,9 +32,13 @@ export default function TalkPost() {
 
   return (
     <div className="talk-post-container">
-      <div>
+      <div className='TalkPost-Select'>
         <label>카테고리</label>
-        <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} />
+        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+          <option value="food">음식</option>
+          <option value="cafe">카페</option>
+          <option value="travel">여행</option>
+        </select>
       </div>
       <div>
         <label>채팅방 이름</label>
