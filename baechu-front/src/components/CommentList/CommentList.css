@@ -1,0 +1,95 @@
+/* components/CommentList/CommentList.css */
+
+.comment-list {
+  margin-top: 20px;
+}
+
+.comment {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.comment.reply {
+  border-left: 2px solid #ddd; /* 대댓글을 댓글과 선으로 구분 */
+  padding-left: 10px; /* 대댓글 내용과 선 간격 설정 */
+}
+
+.comment-author {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.profile-image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.comment-meta {
+  display: flex;
+  align-items: center;
+}
+
+.comment-meta button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.comment-meta button:hover {
+  color: #2196f3;
+}
+
+.replies-container {
+  margin-left: 20px; /* 대댓글을 댓글에서 좀 더 들여쓰기 */
+  border-left: 2px solid #ddd; /* 대댓글을 댓글과 선으로 구분 */
+  padding-left: 10px; /* 대댓글 내용과 선 간격 설정 */
+}
+
+/* Pagination.css */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 8px 12px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button:hover {
+  background-color: #1769aa;
+}
+
+/* PostDetail.css */
+
+.post-detail {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.post-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profile-image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-left: 5px;
+}

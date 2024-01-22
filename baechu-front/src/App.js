@@ -1,13 +1,14 @@
 import React from "react";
-import { BrowserRouter , Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import TalkDetail from "./pages/TalkDetail/TalkDetail";
 import BoardList from "./pages/BoardList/BoardList";
 import PasswordRecoveryPage from "./pages/PasswordRecoveryPage/PasswordRecoveryPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import TalkList from "./pages/TalkList/TalkList";
+import TalkDetail from "./pages/TalkDetail/TalkDetail";
+import PostDetail from "./pages/PostDetail/PostDetail";
 import "./index.css";
 
 const App = () => {
@@ -24,10 +25,10 @@ const App = () => {
           <Route path="/TalkList" element={<TalkList />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/password-recovery" element={<PasswordRecoveryPage />} />
-          <Route path="/Login" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/post/:postId" element={<PostDetail />} />
         </Routes>
         <Footer />
-
       </BrowserRouter>
     </div>
   );
