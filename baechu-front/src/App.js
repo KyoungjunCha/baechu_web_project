@@ -16,6 +16,7 @@ import CommentAlarm from "./pages/CommentAlarm";
 import BookMarkList from "./pages/BookMarkList";
 import TalkPost from "./pages/TalkPost/TalkPost";
 import PageLogin from "./components/PageLogin/PageLogin";
+import PostDetail from "./pages/PostDetail/PostDetail";
 import "./index.css";
 import Chat from "./components/Chat/Chat";
 import BestList from "./components/BestList/BestList";
