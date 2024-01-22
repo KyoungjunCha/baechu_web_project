@@ -53,9 +53,6 @@ const PostDetail = () => {
               </button>
             </div>
             <div className="comment-meta">
-              <button>
-                <FontAwesomeIcon icon={faChevronDown} /> 대댓글 보기
-              </button>
               <span className="timestamp">{post.timestamp}</span>
             </div>
           </div>
