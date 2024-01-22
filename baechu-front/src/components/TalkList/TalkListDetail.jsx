@@ -1,83 +1,20 @@
 import React from 'react';
 import './TalkListDetail.css';
 import imageIcon from '../../images/imgg.png';
+import PropTypes from 'prop-types'; //컴포넌트 데이터 불러온거 사용?
 
-const dummyDatas = [
-  {
-    id: 1,
-    category: '음식',
-    hasimg: true,
-    title: '수원 맛집 가성비 판별',
-    personnel: 100,
-    agree: 60,
-    disagree: 40
-  },
-  {
-    id: 2,
-    category: '카페',
-    hasimg: true,
-    title: '수원 카페 가성비 판별',
-    personnel: 97,
-    agree: 42,
-    disagree: 55
-  },
-  {
-    id: 3,
-    category: '음식',
-    hasimg: true,
-    title: '수원 맛집 가성비 판별',
-    personnel: 97,
-    agree: 42,
-    disagree: 55
-  },
-  {
-    id: 4,
-    category: '음식',
-    hasimg: true,
-    title: '수원 맛집 가성비 판별',
-    personnel: 97,
-    agree: 42,
-    disagree: 55
-  },
-  {
-    id: 5,
-    category: '음식',
-    hasimg: true,
-    title: '수원 맛집 가성비 판별',
-    personnel: 97,
-    agree: 42,
-    disagree: 55
-  },
-  {
-    id: 6,
-    category: '음식',
-    hasimg: true,
-    title: '수원 맛집 가성비 판별',
-    personnel: 97,
-    agree: 42,
-    disagree: 55
-  },
-  {
-    id: 7,
-    category: '음식',
-    hasimg: true,
-    title: '수원 맛집 가성비 판별',
-    personnel: 97,
-    agree: 42,
-    disagree: 55
-  },
-  {
-    id: 8,
-    category: '음식',
-    hasimg: true,
-    title: '수원 맛집 가성비 판별',
-    personnel: 97,
-    agree: 42,
-    disagree: 55
-  },
-];
 
-export default function TalkListDetail() {
+// 컴포넌트에서 불러온 데이터 타입을 정의
+const propTypes = {
+  data : PropTypes.array,
+}
+
+// 데이터가 없을 경우, default 값을 명시
+const defaultprops = {
+  data : [],
+}
+
+export default function TalkListDetail(props) {
   const getTotalVotes = (data) => data.agree + data.disagree;
 
   const getAgreePercentage = (data) => {
@@ -95,7 +32,7 @@ export default function TalkListDetail() {
   return (
     <div className='TalkListDetailWrap'>
       <div className='TalkList'>
-        {dummyDatas.map((data) => (
+        {props.data.map((data) => (
           <div key={data.id} className='item'>
             <div className='title'>{data.title}</div>
             <div className='detail-List'>

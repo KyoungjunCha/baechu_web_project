@@ -3,6 +3,7 @@ import "./TalkListHeader.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import TalkListDetail from '../TalkList/TalkListDetail';
+import PropTypes from 'prop-types';
 
 const dummyCategorys = [
     {
@@ -27,10 +28,23 @@ const dummyCategorys = [
     },
 ];
 
-function TalkListHeader() {
+const propTypes = {
+    selectCategoryList : PropTypes.func,
+    categoryItem : PropTypes.string,
+    onClickCategoryList : PropTypes.func,
+}
+
+const defaultprops = {
+    selectCategoryList : () =>{},
+    categoryItem : "",
+    onClickCategoryList : ()=>{},
+}
+
+function TalkListHeader(props) {
     //함수를 적는다?
-    // <TalkListHeader />
+    //modal 사용법
     const [isopenmodal,setIsopenmodal] = useState(false);
+    
 
     const renderBody = () => {
         return (
@@ -45,10 +59,10 @@ function TalkListHeader() {
                     </button>
                 </div>
                 <div className='TalkCategory'>
-                    {dummyCategorys.map((categorys) => (
-                        <div key={categorys.id} className='categoryItem'>
-                            {categorys.category}
-                        </div>
+                    {dummyCategorys.map((item) => (
+                        <label value = {item.category} onClick={(e)=>{props.onClickCategoryList(item.category); props.selectCategoryList(item.category) }}  key={item.id} className='categoryItem'>
+                            {item.category}
+                        </label>
                     ))}
                 </div>
 
