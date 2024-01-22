@@ -5,20 +5,29 @@
 }
 
 .comment {
+  background-color: #f9f9f9;
   border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 10px;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
 }
 
 .comment.reply {
-  border-left: 2px solid #ddd; /* 대댓글을 댓글과 선으로 구분 */
-  padding-left: 10px; /* 대댓글 내용과 선 간격 설정 */
+  border-left: 2px solid #ddd;
+  padding-left: 10px;
 }
 
 .comment-author {
   display: flex;
   align-items: center;
   margin-bottom: 5px;
+}
+
+.comment-author img {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
 .profile-image {
@@ -31,6 +40,8 @@
 .comment-meta {
   display: flex;
   align-items: center;
+  font-size: 12px;
+  color: #888;
 }
 
 .comment-meta button {
@@ -38,16 +49,36 @@
   border: none;
   cursor: pointer;
   margin-right: 5px;
+  display: flex;
+  align-items: center;
 }
 
 .comment-meta button:hover {
   color: #2196f3;
 }
 
+.comment p {
+  margin: 10px 0;
+}
+
 .replies-container {
-  margin-left: 20px; /* 대댓글을 댓글에서 좀 더 들여쓰기 */
-  border-left: 2px solid #ddd; /* 대댓글을 댓글과 선으로 구분 */
-  padding-left: 10px; /* 대댓글 내용과 선 간격 설정 */
+  margin-left: 20px;
+  border-left: 2px solid #ddd;
+  padding-left: 10px;
+}
+
+.reply-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #2196f3;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.reply-toggle:hover {
+  text-decoration: underline;
 }
 
 /* Pagination.css */
