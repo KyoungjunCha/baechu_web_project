@@ -68,19 +68,9 @@ const CommentList = ({ postId }) => {
   return (
     <div className="comment-list">
       <h3>댓글</h3>
-      {comments.map((comment) => (
+      {currentComments.map((comment) => (
         <div key={comment.id}>
           <Comment comment={comment} />
-          {/* 댓글 1일 때만 대댓글 표시 및 숨기기 기능을 렌더링합니다. */}
-          {comment.id === 1 &&
-            comment.replies &&
-            comment.replies.length > 0 && (
-              <div className="replies-container">
-                {comment.replies.map((reply) => (
-                  <Comment key={reply.id} comment={reply} isReply={true} />
-                ))}
-              </div>
-            )}
         </div>
       ))}
       <Pagination
