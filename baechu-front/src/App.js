@@ -51,6 +51,7 @@ const App = () => {
               <Route path="/pagelogin" element={<PageLogin />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/" element={<BestList />} />
+              <Route path="/post/:postId" element={<PostDetail />} />
             </Routes>
           </div>
 
