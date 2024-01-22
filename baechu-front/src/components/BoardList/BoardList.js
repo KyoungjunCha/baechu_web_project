@@ -64,27 +64,8 @@ const BoardList = ({ selectedCategory }) => {
   }, []); // 빈 배열을 넣어 한 번만 실행되도록 설정
 
   return (
-    <div>
-      {/* 카테고리 및 지역 선택 */}
+    <div className="list-container">
       <div className="category-container">
-        {/* 수정: 카테고리 드롭다운 제거 */}
-        {/* <select
-          id="category"
-          value={selectedCategory}
-          onChange={(e) => setSelectedLocation('')}
-          className="category-select"
-        >
-          <option value="" disabled>
-            -- 카테고리 선택 --
-          </option>
-          {['미용', '음식', '관광', '카페', '스포츠'].map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select> */}
-        
-        {/* 추가: 지역 선택 드롭다운 */}
         <select
           id="location"
           value={selectedLocation}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import TalkDetail from "./pages/TalkDetail/TalkDetail";
@@ -21,44 +21,47 @@ import Chat from "./components/Chat/Chat";
 import BestList from "./components/BestList/BestList";
 
 const App = () => {
-  // state 추가
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  // 카테고리 변경 핸들러 함수
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
   };
 
   return (
-    <div className="page-content">
-      <BrowserRouter>
-        {/* Header에 선택된 카테고리 전달 */}
+    <Router>
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <Header onSelectCategory={handleCategoryChange} />
-        <div className="centerText">
-          <p>invisible something</p>
+
+        <div style={{ display: 'flex', flexGrow: 1, justifyContent: 'space-between', padding: '20px' }}>
+          <div style={{ flex: '1', marginRight: '20px' }}>
+            <Routes>
+              <Route path="/TalkDetail" element={<TalkDetail />} />
+              <Route path="/TalkList" element={<TalkList />} />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/password-recovery" element={<PasswordRecoveryPage />} />
+              <Route path="/Login" element={<LoginPage />} />
+              <Route path="/privacyChang" element={<PrivacyChang />} />
+              <Route path="/myPostList" element={<MyPostList />} />
+              <Route path="/myCommentList" element={<MyCommentList />} />
+              <Route path="/commentAlarm" element={<CommentAlarm />} />
+              <Route path="/bookMarkList" element={<BookMarkList />} />
+              <Route path="/postWrite" element={<PostWrite />} />
+              <Route path="/TalkPost" element={<TalkPost />} />
+              <Route path="/list" element={<BoardList selectedCategory={selectedCategory} />} />
+              <Route path="/pagelogin" element={<PageLogin />} />
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/" element={<BestList />} />
+            </Routes>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+            <PageLogin />
+            <Chat />
+          </div>
         </div>
-        <Routes>
-          {/* 각 페이지에 대한 라우팅 */}
-          <Route path="/TalkDetail" element={<TalkDetail />} />
-          <Route path="/TalkList" element={<TalkList />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/password-recovery" element={<PasswordRecoveryPage />} />
-          <Route path="/Login" element={<LoginPage />} />
-          <Route path="/privacyChang" element={<PrivacyChang />} />
-          <Route path="/myPostList" element={<MyPostList />} />
-          <Route path="/myCommentList" element={<MyCommentList />} />
-          <Route path="/commentAlarm" element={<CommentAlarm />} />
-          <Route path="/bookMarkList" element={<BookMarkList />} />
-          <Route path="/postWrite" element={<PostWrite />} />
-          <Route path="/TalkPost" element={<TalkPost />} />
-          <Route path="/list" element={<BoardList selectedCategory={selectedCategory} />} />
-          <Route path="/pagelogin" element={<PageLogin />} />
-          <Route path="/chat" element={<Chat />} />
-          <Route path="/" element={<BestList />} />
-        </Routes>
         <Footer />
-      </BrowserRouter>
-    </div>
+      </div>
+    </Router>
   );
 };
 

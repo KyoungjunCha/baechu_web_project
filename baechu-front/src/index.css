@@ -79,8 +79,16 @@ body {
   transition: color 0.3s ease;
 }
 
-.navigation-bar li:hover {
-  color: #ff4081;
+.navigation-bar a {
+  color: white; 
+  text-decoration: none; 
+
+}
+
+
+.navigation-bar a:hover {
+  text-decoration: underline; 
+
 }
 
 .page-content {
