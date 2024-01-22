@@ -1,0 +1,88 @@
+.TalkListHeaderWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* border: 1px solid red; */
+    height: 20vh;
+    max-width: 700px;
+    margin: 0 auto;
+    /* 가운데 위치를 설정 */
+}
+
+/* .TalkAddress,
+.TalkSearch,
+.TalkCategory {
+    border: 1px solid blue;
+} */
+
+.TalkAddress {
+    background-color: #2196f3;
+    /* 하늘색 배경색 */
+    color: white;
+    /* 흰색 텍스트 */
+    width: 100%;
+    height: 33%;
+    line-height: 5vh;
+    text-align: center;
+    border: 1px solid #2196f3;
+    /* 테두리 색상과 맞추기 */
+    border-radius: 5px;
+    /* 둥글게 만들기 */
+}
+
+.TalkSearch {
+    width: 100%;
+    height: 33%;
+    line-height: 5vh;
+    /* 수정: 5vh로 변경 */
+    border-radius: 5px;
+    background-color: rgb(229, 229, 231);
+    border: 1px solid rgb(229, 229, 231);
+    display: flex;
+    margin: 0 auto;
+}
+
+.TalkSearch input {
+    /* height: 90%; */
+    width: 90%;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.TalkSearch button {
+    width: 10%;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 0 auto;
+}
+
+.TalkCategory {
+    width: 100%;
+    height: 33%;
+    line-height: 5vh;
+    text-align: center;
+    display: flex;
+    flex-direction: row; /* 행으로 정렬 설정 추가 */
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid #797979;
+    border-radius: 5px;
+}
+
+.categoryItem {
+    flex: 1;
+    border: 1px solid #2196f3;
+    background-color: #2196f3;
+    color: white;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    height: 95%;
+}

@@ -1,0 +1,25 @@
+.TalkDetail {
+    height: 60vh;
+    width: 50%;
+    margin-left: 20px;
+    margin-right: 20px;
+    position: relative;
+}
+
+.containerWrap {
+    height: 60vh;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 55rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+.VoteFields{
+    margin-top: 5%;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 20%;
+    /* border: 1px solid red; */
+}
+
