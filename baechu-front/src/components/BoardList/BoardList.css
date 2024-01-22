@@ -1,3 +1,16 @@
+
+.list-container .category-container {
+  margin-right: -10px;
+
+}
+
+
+.list-container{
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+}
+
 .board-table {
   width: 100%;
   max-width: 800px;
