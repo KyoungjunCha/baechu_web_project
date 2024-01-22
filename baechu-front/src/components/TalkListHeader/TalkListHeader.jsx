@@ -40,6 +40,7 @@ const defaultprops = {
     onClickCategoryList : ()=>{},
 }
 
+
 function TalkListHeader(props) {
     //함수를 적는다?
     //modal 사용법
@@ -80,4 +81,5 @@ function TalkListHeader(props) {
 }
 
 export default TalkListHeader;
+
 
