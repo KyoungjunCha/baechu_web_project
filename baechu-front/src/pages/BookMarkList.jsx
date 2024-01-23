@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import imageIcon from '../images/imgy.png';
 import noImageIcon from '../images/imgn.png';
 // import trashIcon from '../images/trashcan-icon-white.png';
-import bookMarkIcon from '../images/bookmark.png'
+import bookMarkIcon from '../images/bookMark.png'
 import '../components/BookMarkList/BookMarkList.css';
 import dummyData from '../dummy/BookMarkDummy'
 
