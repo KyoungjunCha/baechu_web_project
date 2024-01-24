@@ -8,6 +8,7 @@ import TalkPost from "./pages/TalkPost/TalkPost";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import "./index.css";
 import TalkList from "./pages/TalkList/TalkList";
+import TestPage from "./testpages/TestPage";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/TalkDetail" element={<TalkDetail />} />
         <Route path="/TalkList" element = {<TalkList/>}/>
         <Route path="/TalkPost" element = {<TalkPost/>}/>
+        <Route path="/users" element = {<TestPage/>}/>
       </Routes>
       <Footer/>
       </BrowserRouter>
