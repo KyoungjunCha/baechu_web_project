@@ -9,6 +9,8 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import "./index.css";
 import TalkList from "./pages/TalkList/TalkList";
 import TestPage from "./testpages/TestPage";
+import TestSignupPage from "./testpages/TestSignupPage"
+
 
 const App = () => {
   return (
@@ -26,6 +28,7 @@ const App = () => {
         <Route path="/TalkList" element = {<TalkList/>}/>
         <Route path="/TalkPost" element = {<TalkPost/>}/>
         <Route path="/users" element = {<TestPage/>}/>
+        <Route path="/signup" element = {<TestSignupPage/>}/>
       </Routes>
       <Footer/>
       </BrowserRouter>
