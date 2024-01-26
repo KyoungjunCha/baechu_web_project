@@ -1,17 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 const DropdownMenu = ({ data, onSelect }) => {
   const [selectedProvince, setSelectedProvince] = useState(data[0]?.province || null);
   const [selectedCity, setSelectedCity] = useState(data[0]?.city || null);
 
-  // 선택된 지역이 변경될 때마다 콜백 함수 호출
-  useEffect(() => {
+  // useCallback을 사용하여 최적화
+  const memoizedOnSelect = useCallback(() => {
     onSelect({ selectedProvince, selectedCity });
   }, [onSelect, selectedProvince, selectedCity]);
 
+   // 선택된 지역이 변경될 때마다 콜백 함수 호출
+   useEffect(() => {
+    onSelect({ selectedProvince, selectedCity });
+  }, [selectedProvince, selectedCity]);
+
   const handleProvinceChange = (province) => {
     setSelectedProvince(province);
-    setSelectedCity(null);
+    setSelectedCity(''); // 선택된 도시 초기화
   };
 
   const handleCityChange = (city) => {
@@ -23,11 +28,11 @@ const DropdownMenu = ({ data, onSelect }) => {
       <div className="dropdownMenu">
         <select
           className='dropdownSelect'
-          value={selectedProvince || ''}
+          value={selectedProvince}
           onChange={(e) => handleProvinceChange(e.target.value)}
         >
           {data.map((item) => (
-            <option key={item.province} value={item.province}>
+            <option key={`${item.province}-${item.city}`} value={item.province}>
               {item.province}
             </option>
           ))}
@@ -35,7 +40,7 @@ const DropdownMenu = ({ data, onSelect }) => {
         {selectedProvince && (
           <select
             className='dropdownSelect'
-            value={selectedCity || ''}
+            value={selectedCity}
             onChange={(e) => handleCityChange(e.target.value)}
           >
             {data
@@ -52,4 +57,4 @@ const DropdownMenu = ({ data, onSelect }) => {
   );
 };
 
-export default DropdownMenu;
+export default React.memo(DropdownMenu);  // React.memo로 감싸기
