@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import imageIcon from '../images/imgy.png';
 import youTubeIcon from '../images/free-icon-youtube.png';
 import postIcon from '../images/free-icon-bullet-point.png';
@@ -14,7 +15,7 @@ export default function PostWrite() {
     province: dummyData[0]?.province || null,
     city: dummyData[0]?.city || null,
   });
-  const [title, setTitle] = useState('');
+  const [board_title, setboard_title] = useState('');
   const [newPostContent, setNewPostContent] = useState('');
 
   const handleCategoryChange = (category) => {
@@ -25,15 +26,41 @@ export default function PostWrite() {
     setSelectedLocation({ province: selectedProvince, city: selectedCity });
   };
 
-  const handleWritePost = () => {
-    // API 호출을 위한 데이터 준비
-    const postData = {
-      category: selectedCategory,
-      title,
-      content: newPostContent,
-      location: selectedLocation, // 수정된 부분: 선택된 지역 정보 추가
-      // 추가적인 정보나 필요한 데이터를 여기에 추가할 수 있습니다.
-    };
+  const handleWritePost = async () => {
+    try {
+      // API 호출을 위한 데이터 준비
+      // const postData = {
+      //   user_id: '1',
+      //   category: selectedCategory,
+      //   title: title.trim(),  // 공백만 있는 경우를 방지하기 위해 trim 사용
+      //   content: newPostContent,
+      //   province: selectedLocation.province,
+      //   city: selectedLocation.city,
+      //   board_img: '000', // 임시 데이터, 실제로는 이미지 업로드를 구현해야 합니다.
+      // };
+  
+      const postData = {
+        user_id: '1',
+        category: '음식',
+        board_title: '음식',
+        board_detail: '음식 내용',
+        province: '서울특별시',
+        city: '서울특별시',
+        board_img: '000'
+      };
+  
+      // 제목이 비어있는지 확인
+      if (!postData.title) {
+        throw new Error('제목은 비워 둘 수 없습니다.');
+      }
+      // Axios를 사용하여 서버로 데이터 전송
+      const response = await axios.post('http://localhost:3000/postWrite', postData);
+      console.log(response.data);  // 성공 시 서버 응답 데이터 출력
+    } catch (error) {
+      console.error('Error writing post:', error.response); // 에러 더 자세히 출력
+
+      // 실패 시 에러 처리 로직 추가
+    }
   };
 
   return (
@@ -53,21 +80,20 @@ export default function PostWrite() {
             ))}
           </select>
         </div>
-        {/* DropdownMenu에 onSelect prop 전달 */}
         <DropdownMenu data={dummyData} onSelect={handleLocationChange} />
       </div>
       <input
         className='postWriteTitle'
-        placeholder='제목을 입력하세요'
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        placeholder='게시물 제목을 입력해주세요'
+        value={board_title}
+        onChange={(e) => setboard_title(e.target.value)}
       />
-      <div className='linkImg'>
+      {/* <div className='linkImg'>
         <img src={imageIcon} alt='이미지' className="board-img" onClick={{}} />
         <img src={youTubeIcon} alt='유튜브' className="board-img" onClick={{}} />
         <button className='url' onClick={{}}>url</button>
         <img src={postIcon} alt='글' className="board-img" onClick={{}} />
-      </div>
+      </div> */}
       <textarea
         className='postDetail'
         value={newPostContent}

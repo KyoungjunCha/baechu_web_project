@@ -56,10 +56,10 @@ const App = () => {
             </Routes>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+          {/* <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
             <PageLogin />
             <Chat />
-          </div>
+          </div> */}
         </div>
         <Footer />
       </div>
