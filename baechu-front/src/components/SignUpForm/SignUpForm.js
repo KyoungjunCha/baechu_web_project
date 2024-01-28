@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./SignUpForm.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SignUpForm = () => {
   const [id, setId] = useState("");
@@ -8,7 +10,7 @@ const SignUpForm = () => {
   const [email, setEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
   const [nickname, setNickname] = useState("");
-  const [address, setAddress] = useState("");
+  // const [address, setAddress] = useState("");
   const [birthYear, setBirthYear] = useState("");
   const [birthMonth, setBirthMonth] = useState("");
   const [birthDay, setBirthDay] = useState("");
@@ -16,15 +18,56 @@ const SignUpForm = () => {
   const [selectedProvince, setSelectedProvince] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
 
-  const handleSignUp = () => {
+  const [userNickName, setUserNickName] = useState("");
+  const [province, setProvince] = useState("");
+  const [city, setCity] = useState("");
+  const [birthday, setBirthday] = useState("");
+  const [isNicknameAvailable, setIsNicknameAvailable] = useState(null);
+
+  const navigate = useNavigate();
+
+  // 추가: 닉네임 중복 확인 함수
+  const handleCheckNickname = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/check-nickname/${nickname}`
+      );
+
+      if (response.data.available) {
+        setIsNicknameAvailable(true);
+        console.log("사용 가능한 닉네임입니다.");
+      } else {
+        setIsNicknameAvailable(false);
+        console.log("이미 사용 중인 닉네임입니다.");
+      }
+    } catch (error) {
+      console.error("닉네임 중복 확인 오류:", error);
+    }
+  };
+
+  const handleSignUp = async () => {
     if (password !== confirmPassword) {
       console.error("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-      // 또는 사용자에게 알림을 보여줄 수 있습니다.
       return;
     }
 
-    // Implement your signup logic here
-    console.log("Signing up...");
+    try {
+      const response = await axios.post("http://localhost:5000/signup", {
+        userNickName: nickname,
+        email,
+        password,
+        province: selectedProvince,
+        city: selectedCity,
+        birthday: `${birthYear}-${birthMonth}-${birthDay}`,
+      });
+
+      console.log("회원가입 성공:", response.data);
+      // 회원가입 성공 후 로그인 페이지로 이동
+      navigate("/login");
+    } catch (error) {
+      console.error("회원가입 오류:", error.response.data.message);
+      // 사용자에게 오류 메시지를 보여줄 수 있습니다.
+    }
   };
 
   const provinces = [
@@ -36,7 +79,7 @@ const SignUpForm = () => {
     "전라도",
   ];
   const cities = {
-    서울특별시: ["강남구", "강서구", "송파구", "마포구", "영등포구"],
+    // 서울특별시: ["강남구", "강서구", "송파구", "마포구", "영등포구"],
     경기도: ["수원시", "성남시", "용인시", "안양시", "부천시"],
     강원도: ["춘천시", "원주시", "강릉시", "속초시", "동해시"],
     충청도: ["청주시", "대전시", "충주시", "홍성군", "보령시"],
