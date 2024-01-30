@@ -29,37 +29,21 @@ export default function PostWrite() {
   const handleWritePost = async () => {
     try {
       // API 호출을 위한 데이터 준비
-      // const postData = {
-      //   user_id: '1',
-      //   category: selectedCategory,
-      //   title: title.trim(),  // 공백만 있는 경우를 방지하기 위해 trim 사용
-      //   content: newPostContent,
-      //   province: selectedLocation.province,
-      //   city: selectedLocation.city,
-      //   board_img: '000', // 임시 데이터, 실제로는 이미지 업로드를 구현해야 합니다.
-      // };
-  
       const postData = {
         user_id: '1',
-        category: '음식',
-        board_title: '음식',
-        board_detail: '음식 내용',
-        province: '서울특별시',
-        city: '서울특별시',
-        board_img: '000'
+        board_title: board_title.trim(),
+        board_img: '000',
+        board_detail: newPostContent,
+        province: selectedLocation.province,
+        city: selectedLocation.city,
+        category: selectedCategory,
       };
-  
-      // 제목이 비어있는지 확인
-      if (!postData.title) {
-        throw new Error('제목은 비워 둘 수 없습니다.');
-      }
+
       // Axios를 사용하여 서버로 데이터 전송
       const response = await axios.post('http://localhost:3000/postWrite', postData);
       console.log(response.data);  // 성공 시 서버 응답 데이터 출력
     } catch (error) {
-      console.error('Error writing post:', error.response); // 에러 더 자세히 출력
-
-      // 실패 시 에러 처리 로직 추가
+      console.error('Error writing post:', error.response);
     }
   };
 
@@ -89,7 +73,7 @@ export default function PostWrite() {
         onChange={(e) => setboard_title(e.target.value)}
       />
       {/* <div className='linkImg'>
-        <img src={imageIcon} alt='이미지' className="board-img" onClick={{}} />
+        <img src={imageIcon} alt='이미지' className="board-img" onClick={{openFileInput}} />
         <img src={youTubeIcon} alt='유튜브' className="board-img" onClick={{}} />
         <button className='url' onClick={{}}>url</button>
         <img src={postIcon} alt='글' className="board-img" onClick={{}} />
