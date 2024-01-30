@@ -4,7 +4,6 @@ import imageIcon from '../images/imgy.png';
 import noImageIcon from '../images/imgn.png';
 import trashIcon from '../images/trashcan-icon-white.png';
 import '../components/MyPostList/MyPostList.css';
-import dummyData from '../dummy/PostDummy'
 
 const pageSize = 5; // 한 페이지당 아이템 수를 5로 변경
 
@@ -17,7 +16,7 @@ const MyPostList = () => {
   useEffect(() => {
     const getMyPosts = async () => {
       try {
-        const userId = '2';
+        const userId = '1';
 
         const response = await axios.get('http://localhost:3000/myPostList', {
           params: { userId},
@@ -56,6 +55,26 @@ const MyPostList = () => {
     });
   };
 
+  const handleDeleteSelected = () => {
+    // 체크되어 있는 체크박스와 관련된 게시물만 필터링
+    const postsToDelete = posts.filter(post => checkboxStates[post.board_id]);
+    
+    // 선택된 게시물을 제외한 나머지 게시물로 업데이트
+    const updatedPosts = posts.filter(post => !checkboxStates[post.board_id]);
+
+    // 서버에서 선택된 게시물 삭제를 위한 API 호출 (엔드포인트는 서버에 맞게 조절 필요)
+    axios.delete('http://localhost:3000/myPostList', {
+      data: { postsToDelete },
+    })
+    .then(response => {
+      // 삭제가 성공하면 남은 게시물로 상태 업데이트
+      setPosts(updatedPosts);
+    })
+    .catch(error => {
+      console.error('게시물 삭제 중 오류 발생:', error);
+    });
+  };
+
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -79,7 +98,7 @@ const MyPostList = () => {
         <img 
           style={{ width: '50px', height: '50px', display: 'flex', marginLeft: 'auto', color:'white'}} 
           src={trashIcon} alt='전체삭제'
-          // onClick={{}}
+          onClick={handleDeleteSelected}
         />
       </div>
       {currentPageData.map((post) => (
