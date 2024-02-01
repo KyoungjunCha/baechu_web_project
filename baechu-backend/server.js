@@ -243,6 +243,50 @@ app.delete('/myCommentList', async (req, res) => {
   }
 });
 
+app.get('/bookMarkList', (req, res) => {
+  const userId = req.query.userId;
+
+  if (!userId) {
+    return res.status(400).json({ success: false, message: '유효하지 않은 사용자입니다.' });
+  }
+
+  const query = 'SELECT ' +
+  'bookmark.bookmark_id, ' +
+  'bookmark.user_id, ' +
+  'board.board_title, ' +
+  'board.board_detail, ' +
+  'board.board_img ' +
+  'FROM bookmark ' +
+  'JOIN board ON bookmark.board_id = board.board_id ' + 
+  'WHERE bookmark.user_id = ?';
+
+  const values = [userId];
+
+  connection.query(query, values, (error, results) => {
+    if (error) {
+      console.error('Error fetching user comments:', error);
+      return res.status(500).json({ success: false, message: '댓글 목록을 가져오는 중 오류가 발생했습니다.' });
+    }
+    return res.status(200).json({ success: true, data: results, totalItems: results.length });
+  });
+});
+
+app.delete('/bookMarkList', (req, res) => {
+  const bookmarkId = req.body.bookmarkId;
+
+  const deleteQuery = `DELETE FROM bookmark WHERE bookmark_id = ?;`;
+
+  // 데이터베이스에서 해당 ID의 북마크 삭제
+  connection.query(deleteQuery, [bookmarkId], (err, result) => {
+    if (err) {
+      console.error('Error deleting bookmark:', err);
+      res.status(500).json({ success: false, message: 'Error deleting bookmark' });
+    } else {
+      res.json({ success: true, message: 'Bookmark deleted successfully' });
+    }
+  });
+});
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
