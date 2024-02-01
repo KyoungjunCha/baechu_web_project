@@ -171,6 +171,78 @@ app.delete('/myPostList', async (req, res) => {
   });
 });
 
+app.get('/myCommentList', (req, res) => {
+  const userId = req.query.userId;
+
+  if (!userId) {
+    return res.status(400).json({ success: false, message: '유효하지 않은 사용자입니다.' });
+  }
+
+  const query =
+    'SELECT ' +
+    'comment.comment_id, ' +
+    'comment.comment_date, ' +
+    'comment.comment_img, ' +
+    'board.board_title, ' +
+    'user.userNickName ' + 
+    'FROM comment ' +
+    'JOIN board ON comment.board_id = board.board_id ' +
+    'JOIN user ON board.user_id = user.user_id ' + 
+    'WHERE comment.user_id = ?';
+
+  const values = [userId];
+
+  connection.query(query, values, (error, results) => {
+    if (error) {
+      console.error('Error fetching user comments:', error);
+      return res.status(500).json({ success: false, message: '댓글 목록을 가져오는 중 오류가 발생했습니다.' });
+    }
+
+    return res.status(200).json({ success: true, data: results, totalItems: results.length });
+  });
+});
+
+app.delete('/myCommentList', async (req, res) => {
+  const commentIdsToDelete = req.body.commentIdsToDelete;
+
+  if (!commentIdsToDelete || commentIdsToDelete.length === 0) {
+    return res.status(400).json({ success: false, message: '삭제할 댓글이 선택되지 않았습니다.' });
+  }
+
+  // 이미지 ID들에 대한 이미지 데이터를 삭제합니다.
+  const deleteImagesQuery = `
+  DELETE FROM img
+  WHERE img_id IN (
+    SELECT img_id
+    FROM commentimg
+    WHERE comment_id IN (${commentIdsToDelete.join(',')})
+  );
+`;
+
+  // 댓글과 관련된 데이터를 삭제합니다.
+  const deleteCommentDataQuery = `
+    DELETE comment, commentimg, commentlike
+    FROM comment
+    LEFT JOIN commentimg ON comment.comment_id = commentimg.comment_id
+    LEFT JOIN commentlike ON comment.comment_id = commentlike.comment_id
+    WHERE comment.comment_id IN (${commentIdsToDelete.join(',')})
+    OR comment.parents_id IN (${commentIdsToDelete.join(',')});
+  `;
+
+  try {
+    // 1. 이미지 ID들에 대한 이미지 데이터 삭제
+    await connection.query(deleteImagesQuery);
+
+    // 2. 댓글과 관련된 데이터 삭제
+    await connection.query(deleteCommentDataQuery);
+
+    return res.status(200).json({ success: true, message: '댓글이 성공적으로 삭제되었습니다.' });
+  } catch (error) {
+    console.error('댓글 및 관련 데이터 삭제 중 오류 발생:', error);
+    return res.status(500).json({ success: false, message: '댓글 삭제 중 오류가 발생했습니다.' });
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
