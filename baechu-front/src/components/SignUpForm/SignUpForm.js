@@ -146,7 +146,7 @@ const SignUpForm = () => {
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
           />
-          <button>중복 체크</button>
+          <button onClick={handleCheckNickname}>중복 체크</button>
         </div>
       </label>
       <label>

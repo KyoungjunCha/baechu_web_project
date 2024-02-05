@@ -4,15 +4,16 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const app = express();
 const port = 5000;
+const secretKey = "your-secret-key"; // 실제로는 환경 변수 등을 사용해야 함
 
 // Maria DB
 const connection = require("./db");
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 app.get("/users", (req, res) => {
@@ -37,7 +38,6 @@ app.get("/users", (req, res) => {
   });
 });
 
-// 로그인 엔드포인트 추가
 app.post("/login", async (req, res) => {
   const { userNickName, password } = req.body;
 
@@ -68,11 +68,9 @@ app.post("/login", async (req, res) => {
         .json({ success: false, message: "비밀번호가 일치하지 않습니다." });
     }
 
-    // 로그인 성공
-    res.json({
-      success: true,
-      message: "로그인 성공",
-      user: {
+    // JWT 토큰 발급
+    const token = jwt.sign(
+      {
         user_id: user.user_id,
         userNickName: user.userNickName,
         email: user.email,
@@ -80,6 +78,15 @@ app.post("/login", async (req, res) => {
         city: user.city,
         birthday: user.birthday,
       },
+      secretKey,
+      { expiresIn: "1h" } // 토큰 만료 시간 설정 (1시간)
+    );
+
+    // 로그인 성공 및 토큰 전송
+    res.json({
+      success: true,
+      message: "로그인 성공",
+      token,
     });
   });
 });
@@ -87,29 +94,54 @@ app.post("/login", async (req, res) => {
 app.post("/signup", async (req, res) => {
   const { userNickName, email, password, province, city, birthday } = req.body;
 
-  // 비밀번호 해싱
-  const hashedPassword = await bcrypt.hash(password, 10);
+  try {
+    // 비밀번호 해싱
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-  // 사용자 데이터를 데이터베이스에 삽입
-  let query =
-    "INSERT INTO user (userNickName, email, password, province, city, birthday) VALUES (?, ?, ?, ?, ?, ?)";
-  connection.query(
-    query,
-    [userNickName, email, password, province, city, birthday],
-    (err, results) => {
-      if (err) {
-        console.error("사용자 데이터를 삽입하는 중 에러 발생:", err);
-        return res
-          .status(500)
-          .json({ success: false, message: "회원가입에 실패했습니다." });
-      }
-
-      console.log("사용자가 성공적으로 등록되었습니다:", results);
-      res.json({ success: true, message: "회원가입이 완료되었습니다." });
+    // 주소 검증
+    if (province === "서울특별시" && !city) {
+      return res.status(400).json({
+        success: false,
+        message: "서울특별시를 선택했으면 시를 선택해주세요.",
+      });
+    } else if (
+      province !== "서울특별시" &&
+      (!city || city === "시를 선택하세요")
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "시를 선택해주세요.",
+      });
     }
-  );
+
+    // 사용자 데이터를 데이터베이스에 삽입
+    let query =
+      "INSERT INTO user (userNickName, email, password, province, city, birthday) VALUES (?, ?, ?, ?, ?, ?)";
+    connection.query(
+      query,
+      [userNickName, email, hashedPassword, province, city, birthday],
+      (err, results) => {
+        if (err) {
+          console.error("사용자 데이터를 삽입하는 중 에러 발생:", err);
+          return res
+            .status(500)
+            .json({ success: false, message: "회원가입에 실패했습니다." });
+        }
+
+        console.log("사용자가 성공적으로 등록되었습니다:", results);
+        res.json({ success: true, message: "회원가입이 완료되었습니다." });
+      }
+    );
+  } catch (error) {
+    console.error("비밀번호 해싱 중 에러 발생:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "회원가입에 실패했습니다." });
+  }
 });
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+module.exports = app;
