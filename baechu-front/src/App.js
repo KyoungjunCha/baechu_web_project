@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import BoardList from "./pages/BoardList/BoardList";
 import PasswordRecoveryPage from "./pages/PasswordRecoveryPage/PasswordRecoveryPage";
+import TermsAndConditionsPage from "./pages/SignUpPage/TermsAndConditionsPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import TalkList from "./pages/TalkList/TalkList";
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/" element={<BoardList />} />
           <Route path="/TalkDetail" element={<TalkDetail />} />
           <Route path="/TalkList" element={<TalkList />} />
+          <Route path="/signup/terms" element={<TermsAndConditionsPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/password-recovery" element={<PasswordRecoveryPage />} />
           <Route path="/login" element={<LoginPage />} />

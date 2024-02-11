@@ -16,7 +16,7 @@ const LoginForm = () => {
       });
 
       if (response.data.success) {
-        console.log("로그인 성공");
+        console.log("로그인 성공", response.data);
 
         // 로그인 성공 시에 다음 페이지로 이동하거나 필요한 동작을 수행합니다.
         // 예를 들어, 다음 페이지로 이동하는 경우:
