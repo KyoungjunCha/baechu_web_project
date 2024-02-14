@@ -13,7 +13,8 @@ const connection = require('./db');
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get('/users', (req, res) => {
+
+app.get('/users', (req, res) => { 
   // 이 부분에서 DB에서 사용자 데이터를 가져와야 합니다.
   let query = 'SELECT * FROM user'; // 실제 쿼리에 맞게 수정
   connection.query(query, (err, results) => {
@@ -22,7 +23,7 @@ app.get('/users', (req, res) => {
       return res.status(500).json({ success: false, message: '서버 에러' });
     }
     console.log('Fetched user data:', results); // 로그에 결과 출력
-    const users = results.map(user => ({
+    const users = results.map(user => ({ 
       user_id: user.user_id,
       userNickName: user.userNickName,
       email: user.email,
@@ -34,6 +35,7 @@ app.get('/users', (req, res) => {
     res.json(users);
   });
 })
+
 
 // POST 엔드포인트: 사용자 등록을 처리하는 엔드포인트
 app.post('/signup', (req, res) => {

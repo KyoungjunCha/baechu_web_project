@@ -1,92 +1,131 @@
 import React, { useState, useEffect } from "react";
+import socket from "../../server";
 import MessageContainer from "../../components/MessageContainer/MessageContainer";
 import InputField from "../../components/InputField/InputField";
-import socket from "../../server";
-import "./TalkDetail.css";
 import VoteField from "../../components/VoteField/VoteField";
 import ChatRoomTitle from "../../components/ChatRoomTitle/ChatRoomTitle";
+import { useParams } from "react-router-dom";
+import "./TalkDetail.css";
 
-export default function TalkDetail() {
-  const [user, setUser] = useState(null);
+const TalkDetail = ({ user }) => {
   const [message, setMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
-  // const [voteData, setVoteData] = useState({
-  //   title: "Default Title",
-  //   image: "../images/imgg.png",
-  // })
+  const { id } = useParams();
+  const [voteData, setVoteData] = useState({
+    agreeCount: 0,
+    disagreeCount: 0
+  });
+  const [roomData, setRoomData] = useState({});
 
-  useEffect(() => {
-    const askUserName = () => {
-      const userName = prompt("당신의 이름을 입력하세요.");
-      console.log("uuu", userName);
+  useEffect(
+    () => {
+      socket.on("message", messageListener);
+      socket.on("vote", voteListener);
 
-      socket.emit("login", userName, (res) => {
-        console.log("Res", res);
-        if (res?.ok) {
-          setUser(res.data);
-
-          // 사용자 이름을 성공적으로 설정했을 때만 소켓에 join
-          socket.emit("join", userName);
+      socket.emit("getRoomInfo", id, response => {
+        if (response.ok) {
+          setRoomData(response.data.room); // 서버로부터 받은 방 정보를 상태에 저장
+        } else {
+          console.error("Failed to fetch room info", response.error);
         }
       });
 
-      // 'message' 이벤트 리스너 등록
-      socket.on("message", (message) => {
-        setMessageList((prevState) => prevState.concat(message));
+      socket.emit("joinRoom", id, async res => {
+        console.log("Join Room Response:", id);
+
+        if (res && res.ok) {
+          console.log("Successfully joined", res);
+          await getChatHistory();
+          await getVoteCounts();
+        } else {
+          console.log("Failed to join", res);
+        }
       });
-    };
 
-    // 컴포넌트가 마운트될 때 한 번만 실행
-    askUserName();
+      const getChatHistory = async () => {
+        try {
+          const chatHistoryResponse = await new Promise(resolve => {
+            socket.emit("getChatHistory", id, response => {
+              resolve(response);
+            });
+          });
 
-    // 컴포넌트가 언마운트될 때 이벤트 리스너 정리
-    return () => {
-      socket.off("message");
-    };
-  }, []); // 빈 배열을 전달하여 마운트 시에만 실행
+          if (chatHistoryResponse.ok) {
+            setMessageList(chatHistoryResponse.data);
+          }
+        } catch (error) {
+          console.error("Error getting chat history:", error);
+        }
+      };
 
-  // 메시지 보내는 부분
-  const sendMessage = (event) => {
-    // 화면 재라우팅 되는 것을 막음.
+      const getVoteCounts = async () => {
+        try {
+          const voteCountsResponse = await new Promise(resolve => {
+            socket.emit("getVoteCounts", id, response => {
+              resolve(response);
+            });
+          });
+          if (voteCountsResponse.ok) {
+            setVoteData(voteCountsResponse.data);
+          }
+        } catch (error) {
+          console.error("Error getting vote counts:", error);
+        }
+      };
+      return () => {
+        socket.off("message", messageListener);
+        socket.off("vote", voteListener);
+      };
+    },
+    [id]
+  );
+
+  const sendMessage = event => {
     event.preventDefault();
-    socket.emit("sendMessage", message, (res) => {
-      console.log("sendMessage res", res);
+    socket.emit("sendMessage", { message, room: id }, res => {
+      if (!res.ok) {
+        console.log("Error sending message", res.error);
+      }
+      setMessage("");
     });
 
-    setMessage('');
+    // setMessageList(prevState => prevState.concat({ user, chat: message }));
   };
 
-  // InputField의 위치test 조정
-  // useEffect(() => {
-  //   if (inputFieldRef.current) {
-  //     const inputFieldHeight = inputFieldRef.current.offsetHeight;
-  //     const messageContainer = document.querySelector(".message-container");
-  //     // messageContainer.style.marginBottom = `${inputFieldHeight}px`;test
-  //   }
-  // }, [inputFieldRef]);
+  const messageListener = res => {
+    // console.log("message", res);
+    setMessageList(prevState => prevState.concat(res));
+  };
 
+  const voteListener = res => {
+    setVoteData(res);
+  };
 
-
-  // 더미 데이터 업데이트 예시 (5초마다 랜덤하게 변경)
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     const randomTitle = `Vote Title ${Math.floor(Math.random() * 100)}`;
-  //     const randomImage = `/images/image${Math.floor(Math.random() * 5)}.png`;
-  //     setVoteData({ title: randomTitle, image: randomImage });
-  //   }, 5000);
-
-  //   return () => clearInterval(interval);
-  // }, []);
+  const sendVote = voteType => {
+    socket.emit("sendVote", { vote: voteType, room: id }, res => {
+      if (!res.ok) {
+        console.log("Error sending vote", res.error);
+      }
+    });
+  };
 
   return (
     <div className="containerWrap">
       <div className="VoteFields">
-        <VoteField />
+        <VoteField
+          voteData={voteData}
+          sendVote={sendVote}
+          roomData={roomData}
+        />
       </div>
       <div className="TalkDetail">
-        <ChatRoomTitle/>
-        <MessageContainer messageList={messageList} user={user} />
-        {/* <div ref={inputFieldRef}> */}
+        <ChatRoomTitle roomData={roomData} />
+        <div className="TalkDetailContainer">
+          {/* {console.log("테스트", user)} */}
+          {messageList.length > 0
+            ? <MessageContainer messageList={messageList} user={user} />
+            : null}
+        </div>
         <div>
           <InputField
             message={message}
@@ -97,4 +136,6 @@ export default function TalkDetail() {
       </div>
     </div>
   );
-}
+};
+
+export default TalkDetail;

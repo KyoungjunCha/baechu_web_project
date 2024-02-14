@@ -1,62 +1,56 @@
-import React, { useState } from 'react';
-import "./VoteField.css";
+import React, { useState, useEffect } from 'react';
+import './VoteField.css';
 
-export default function VoteField() {
-    const [voteData, setVoteData] = useState({
-        title: '테스트 Vote',
-        image: "../../images/imgg.png",
-        agreeCount: 0,
-        disagreeCount: 0,
-    });
+function VoteField({ voteData, sendVote, roomData }) {
+    const [agreePercentage, setAgreePercentage] = useState(0);
+    const [disagreePercentage, setDisagreePercentage] = useState(0);
 
-    const getTotalVotes = () => voteData.agreeCount + voteData.disagreeCount;
+    useEffect(() => {
+        const totalVotes = voteData.agreeCount + voteData.disagreeCount;
+        const agreePercentage = totalVotes ? (voteData.agreeCount / totalVotes) * 100 : 0;
+        const disagreePercentage = totalVotes ? (voteData.disagreeCount / totalVotes) * 100 : 0;
 
-    const getAgreePercentage = () => {
-        const totalVotes = getTotalVotes();
-        return totalVotes === 0 ? 0 : Math.round((voteData.agreeCount / totalVotes) * 100);
-    };
-
-    const getDisagreePercentage = () => {
-        const totalVotes = getTotalVotes();
-        return totalVotes === 0 ? 0 : Math.round((voteData.disagreeCount / totalVotes) * 100);
-    };
+        setAgreePercentage(agreePercentage);
+        setDisagreePercentage(disagreePercentage);
+    }, [voteData]);
 
     const handleAgree = () => {
-        setVoteData((prevData) => ({
-            ...prevData,
-            agreeCount: prevData.agreeCount + 1,
-        }));
+        // Agree 버튼 클릭 시 서버에 투표 정보 전송
+        sendVote('agree');
     };
 
     const handleDisagree = () => {
-        setVoteData((prevData) => ({
-            ...prevData,
-            disagreeCount: prevData.disagreeCount + 1,
-        }));
+        // Disagree 버튼 클릭 시 서버에 투표 정보 전송
+        sendVote('disagree');
     };
 
     return (
         <div className="vote-field">
             <div className='vote'>
-                <h3>{voteData.title}</h3>
-                <img src={voteData.image} alt="Vote Image" />
-
+                <h3>{roomData.votetitle}</h3>
                 <div className="vote-options">
                     <button className="agree-button" onClick={handleAgree}>Agree</button>
                     <button className="disagree-button" onClick={handleDisagree}>Disagree</button>
                 </div>
-            </div>
-            <div className='graph'>
-                <h3>{voteData.title}</h3>
                 <div>
-                    Agree: {getAgreePercentage()}%
-                    <div style={{ width: `${getAgreePercentage()}%`, background: 'green', height: '20px' }} />
+                    {roomData.description}
                 </div>
                 <div>
-                    Disagree: {getDisagreePercentage()}%
-                    <div style={{ width: `${getDisagreePercentage()}%`, background: 'red', height: '20px' }} />
+                    {roomData.price}원
+                </div>
+            </div>
+            <div className='graph'>
+                <h3>{roomData.votetitle}</h3>
+                <div>
+                    Agree: {voteData.agreeCount}
+                    <div style={{ width: `${agreePercentage}%`, background: 'green', height: '20px', marginBottom: '4px' }} />
+                </div>
+                <div>
+                    Disagree: {voteData.disagreeCount}
+                    <div style={{ width: `${disagreePercentage}%`, background: 'red', height: '20px' }} />
                 </div>
             </div>
         </div>
     );
 }
+export default VoteField;

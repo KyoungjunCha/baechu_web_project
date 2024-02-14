@@ -1,52 +1,47 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import "./MessageContainer.css";
+import { Container } from "@mui/system";
 
 const MessageContainer = ({ messageList, user }) => {
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    // 컴포넌트가 마운트되었을 때만 참조
-    if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
-    }
-  }, [messageList]);
-
   return (
-    <div ref={containerRef} className="message-container">
-      {messageList.map((message) => (
-        <div key={message._id}>
-          {message.user.name === "system" ? (
-            <div className="system-message-container">
-              <p className="system-message">{message.chat}</p>
-            </div>
-          ) : (
-            <div
-              className={
-                message.user.name === user.name
-                  ? "my-message-container"
-                  : "your-message-container"
-              }
-              key={message._id}
-            >
-              {message.user.name !== user.name && (
-                <>
-                  <div className="sender-info">
+    <div>
+      {messageList.map((message, index) => {
+        // console.log("메시지:", message);
+        return (
+          <Container key={message._id} className="message-container">
+            {/* {console.log("테스트2", user)} */}
+            {message.user.name === "system"
+              ? <div className="system-message-container">
+                  <p className="system-message">
+                    {message.chat}
+                  </p>
+                </div>
+              : message.user.name === user.name
+                ? <div className="my-message-container">
+                    <div className="my-message">
+                      {message.chat}
+                    </div>
+                  </div>
+                : <div className="your-message-container">
                     <img
                       src="/profile.jpeg"
                       className="profile-image"
-                      alt="Profile"
+                      style={
+                        (index === 0
+                          ? { visibility: "visible" }
+                          : messageList[index - 1].user.name === user.name) ||
+                        messageList[index - 1].user.name === "system"
+                          ? { visibility: "visible" }
+                          : { visibility: "hidden" }
+                      }
                     />
-                    <div className="sender-name">{message.user.name}</div>
-                  </div>
-                </>
-              )}
-              <div className={message.user.name === user.name ? "my-message" : "your-message"}>
-                {message.chat}
-              </div>
-            </div>
-          )}
-        </div>
-      ))}
+                    <div className="your-message">
+                      {message.chat}
+                    </div>
+                  </div>}
+          </Container>
+        );
+      })}
     </div>
   );
 };
