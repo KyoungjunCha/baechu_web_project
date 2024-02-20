@@ -35,8 +35,13 @@ const MessageContainer = ({ messageList, user }) => {
                           : { visibility: "hidden" }
                       }
                     />
-                    <div className="your-message">
-                      {message.chat}
+                    <div className="your-message-with-name">
+                      <span className="message-user-name">
+                        {message.user.name}
+                      </span>
+                      <div className="your-message">
+                        {message.chat}
+                      </div>
                     </div>
                   </div>}
           </Container>

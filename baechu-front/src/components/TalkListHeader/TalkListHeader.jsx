@@ -1,85 +1,63 @@
-import React, { useState } from 'react';
+import React from 'react';
 import "./TalkListHeader.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import TalkListDetail from '../TalkListDetail/TalkListDetail';
 import PropTypes from 'prop-types';
 
-const dummyCategorys = [
-    {
-        id: 1,
-        category: '음식'
-    },
-    {
-        id: 2,
-        category: '운동'
-    },
-    {
-        id: 3,
-        category: '카페'
-    },
-    {
-        id: 4,
-        category: '전자기기'
-    },
-    {
-        id: 5,
-        category: '음악'
-    },
+const dummyCategories = [
+    { id: 1, category: 'all' },
+    { id: 2, category: 'food' },
+    { id: 3, category: 'cafe' },
+    { id: 4, category: 'travel' }
 ];
 
-const propTypes = {
-    selectCategoryList: PropTypes.func,
-    categoryItem: PropTypes.string,
-    onClickCategoryList: PropTypes.func,
-}
+function TalkListHeader({ selectCategoryList, categoryItem, onSearch }) {
 
-const defaultprops = {
-    selectCategoryList: () => { },
-    categoryItem: "",
-    onClickCategoryList: () => { },
-}
+    const [searchTerm, setSearchTerm] = React.useState("");
 
+    // 검색어 입력 핸들러
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
 
-function TalkListHeader(props) {
-    //함수를 적는다?
-    //modal 사용법
-    const [isopenmodal, setIsopenmodal] = useState(false);
-
-
-    const renderBody = () => {
-        return (
-            <div className='TalkListHeaderWrap'>
-                <div className='TalkAddress'>
-                    경기도 수원시 장안구
-                </div>
-                <div className='TalkSearch'>
-                    <input type="text" placeholder="검색어를 입력하세요" />
-                    <button type="button" onClick={() => { setIsopenmodal(!isopenmodal) }}>
-                        <FontAwesomeIcon icon={faSearch} aria-label="search icon" />
-                    </button>
-                </div>
-                <div className='TalkCategory'>
-                    {dummyCategorys.map((item) => (
-                        <label value={item.category} onClick={(e) => { props.onClickCategoryList(item.category); props.selectCategoryList(item.category) }} key={item.id} className='categoryItem'>
-                            {item.category}
-                        </label>
-                    ))}
-                </div>
-
-            </div>
-        );
-    }
+    // 검색 실행 핸들러
+    const handleSearchSubmit = () => {
+        onSearch(searchTerm);
+    };
 
     return (
-        <div>
-            {renderBody()}
-            {isopenmodal ? <TalkListDetail /> : null}
+        <div className='TalkListHeaderWrap'>
+            <div className='TalkAddress'>
+                경기도 수원시 장안구
+            </div>
+            <div className='TalkSearch'>
+                <input type="text" placeholder="검색어를 입력하세요" value={searchTerm} onChange={handleSearchChange} />
+                <button type="button" onClick={handleSearchSubmit}>
+                    <FontAwesomeIcon icon={faSearch} aria-label="search icon" />
+                </button>
+            </div>
+            <div className='TalkCategory'>
+                {dummyCategories.map((item) => (
+                    <button
+                        onClick={() => selectCategoryList(item.category)}
+                        key={item.id}
+                        className={`categoryItem ${categoryItem === item.category ? 'active' : ''}`}>
+                        {item.category}
+                    </button>
+                ))}
+            </div>
         </div>
-    )
-
+    );
 }
 
+TalkListHeader.propTypes = {
+    selectCategoryList: PropTypes.func.isRequired,
+    categoryItem: PropTypes.string,
+    onSearch: PropTypes.func.isRequired // 검색 함수 prop 타입 정의
+};
+
+// TalkListHeader.defaultProps = {
+//     categoryItem: "",
+// };
+
 export default TalkListHeader;
-
-

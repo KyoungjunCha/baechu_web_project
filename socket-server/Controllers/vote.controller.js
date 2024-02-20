@@ -29,7 +29,7 @@ voteController.getVoteCounts = async roomId => {
   }
 };
 
-voteController.saveVote = async (io, roomId, receiveVote, user) => {
+voteController.saveVote = async (roomId, receiveVote, user) => {
   try {
     // 중복 투표 방지: 사용자가 이미 해당 방에서 투표했는지 확인
     const existingVote = await Vote.findOne({ room: roomId, user: user._id });
@@ -47,7 +47,9 @@ voteController.saveVote = async (io, roomId, receiveVote, user) => {
     await newVote.save();
 
     // 실시간 투표 갱신: 새로운 투표 정보를 해당 방의 모든 사용자에게 전송
-    io.to(roomId).emit("newVote", newVote);
+    // io
+    //   .to(roomId)
+    //   .emit("updateVote", await voteController.getVoteCounts(roomId));
 
     return newVote;
   } catch (error) {

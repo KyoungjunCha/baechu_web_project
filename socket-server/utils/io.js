@@ -76,15 +76,16 @@ module.exports = function(io) {
         const { vote, room } = data;
         const user = await userController.checkUser(socket.id);
         if (user && room) {
-          const savedVote = await voteController.saveVote(io, room, vote, user);
-          io.to(room).emit("vote", savedVote);
-          console.log("Vote sent:", savedVote);
+          const savedVote = await voteController.saveVote(room, vote, user);
+          const updatedVoteCounts = await voteController.getVoteCounts(room);
+          io.to(room).emit("updateVote", updatedVoteCounts); // 수정된 부분: 특정 방에만 업데이트를 방송
+          console.log("Vote sent and updated:", savedVote);
           cb({ ok: true });
         } else {
-          cb({ ok: false, error: "User or vote Data not found" });
+          cb({ ok: false, error: "User or vote data not found" });
         }
       } catch (error) {
-        console.log("Error in Votedata:", error);
+        console.error("Error in sendVote:", error);
         cb({ ok: false, error: error.message });
       }
     });
@@ -99,19 +100,67 @@ module.exports = function(io) {
       }
     });
 
+    //24.02.16 joinRoom
+    // socket.on("joinRoom", async (roomId, cb) => {
+    //   try {
+    //     const user = await userController.checkUser(socket.id);
+    //     await roomController.joinRoom(roomId, user);
+    //     socket.join(user.room.toString());
+    //     const welcomeMessage = {
+    //       chat: `${user.name} is joined to this room`,
+    //       user: { id: null, name: "system" }
+    //     };
+
+    //     // // 방의 현재 참여 인원 수를 업데이트하고 이를 모든 클라이언트에게 전송
+    //     const roomInfo = await roomController.getRoomById(roomId); // 방 정보 가져오기
+    //     console.log("방정보", roomInfo);
+    //     if (roomInfo) {
+    //       const uniqueUserIds = new Set(
+    //         roomInfo.room.members.map(member => member.toString())
+    //       );
+    //       const userCount = uniqueUserIds.size;
+    //       console.log("진짜 인원수", userCount);
+    //       // 참여 인원 수를 모든 클라이언트에게 전송
+    //       io.to(roomId).emit("updateRoomInfo", { userCount });
+    //     }
+
+    //     io.to(user.room.toString()).emit("message", welcomeMessage);
+    //     io.emit("rooms", await roomController.getAllRooms());
+
+    //     cb({ ok: true });
+    //   } catch (error) {
+    //     cb({ ok: false, error: error.message });
+    //   }
+    // });
+
+    // 24.02.17 joinRoom
     socket.on("joinRoom", async (roomId, cb) => {
       try {
         const user = await userController.checkUser(socket.id);
         await roomController.joinRoom(roomId, user);
-        socket.join(user.room.toString());
+        socket.join(roomId); // 사용자를 방에 조인시킴
         const welcomeMessage = {
           chat: `${user.name} is joined to this room`,
           user: { id: null, name: "system" }
         };
-        io.to(user.room.toString()).emit("message", welcomeMessage);
-        io.emit("rooms", await roomController.getAllRooms());
+
+        // 방의 현재 참여 인원 수를 업데이트하고 이를 모든 클라이언트에게 전송
+        const roomInfo = await roomController.getRoomById(roomId);
+        if (roomInfo && roomInfo.room && Array.isArray(roomInfo.room.members)) {
+          // members 배열이 존재하며 배열인지 확인
+          const uniqueUserIds = new Set(
+            roomInfo.room.members.map(member => member.id.toString())
+          );
+          const userCount = uniqueUserIds.size;
+          io.to(roomId).emit("updateRoomInfo", { userCount }); // 참여 인원 수를 모든 클라이언트에게 전송
+        } else {
+          console.log("Members information is missing or invalid");
+        }
+
+        io.to(roomId).emit("message", welcomeMessage);
         cb({ ok: true });
       } catch (error) {
+        console.error("Error in joinRoom:", error);
         cb({ ok: false, error: error.message });
       }
     });
