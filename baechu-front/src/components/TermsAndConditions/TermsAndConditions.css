@@ -1,0 +1,66 @@
+.terms-and-conditions {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.term-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.term-checkbox label {
+  display: flex;
+  align-items: center;
+}
+
+.term-checkbox input[type="checkbox"] {
+  margin-right: 8px;
+  align-self: flex-start;
+}
+.terms-box {
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.term {
+  padding: 20px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.term label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.term-content {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.actions {
+  text-align: center;
+}
+
+.actions a {
+  display: inline-block;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.actions a:hover {
+  background-color: #1769aa;
+}
+
+.actions .disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
