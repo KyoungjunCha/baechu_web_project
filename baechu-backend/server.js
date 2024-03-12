@@ -13,6 +13,18 @@ const connection = require("./db");
 app.use(bodyParser.json());
 app.use(cors());
 
+// 디텍토리 생성 및 연결
+const fs = require("fs");
+const path = require("path");
+
+const multer = require("multer");
+const upload = multer(); // multer 인스턴스 생성
+app.use(upload.any());
+
+// 이미지를 저장할 디렉토리 경로
+const uploadImgDir = path.join(__dirname, "images");
+const uploadFileDir = path.join(__dirname, "files");
+
 const users = [];
 
 app.post("/signup", (req, res) => {
@@ -58,17 +70,6 @@ app.post("/login", (req, res) => {
       .json({ success: false, message: "유효하지 않은 사용자입니다." });
   }
 });
-
-const fs = require("fs");
-const path = require("path");
-
-const multer = require("multer");
-const upload = multer(); // multer 인스턴스 생성
-app.use(upload.any());
-
-// 이미지를 저장할 디렉토리 경로
-const uploadImgDir = path.join(__dirname, "images");
-const uploadFileDir = path.join(__dirname, "files");
 
 app.post("/postWrite", async (req, res) => {
   // console.log('req.body:', req.body); // 요청의 바디 콘솔 출력
@@ -435,6 +436,129 @@ app.delete("/bookMarkList", (req, res) => {
         .json({ success: false, message: "Error deleting bookmark" });
     } else {
       res.json({ success: true, message: "Bookmark deleted successfully" });
+    }
+  });
+});
+
+app.get("/post/:postId", (req, res) => {
+  const boardId = req.params.postId;
+
+  if (!boardId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "유효하지 않은 페이지입니다." });
+  }
+
+  const query =
+    "SELECT " +
+    "board.user_id, " +
+    "board.board_date, " +
+    "board.board_title, " +
+    "board.board_detail, " +
+    "board.province, " +
+    "board.city, " +
+    "board.board_img, " +
+    "board.web_url, " +
+    "board.youtub_url, " +
+    "board.board_file, "+
+    "board.views, "+
+    "user.userNickName "+
+    "FROM board " +
+    "LEFT JOIN user ON board.user_id = user.user_id "+ 
+    "WHERE board.board_id = ?";
+
+  const values = [boardId];
+
+  connection.query(query, values, (error, results) => {
+    if (error) {
+      console.error("Error fetching post details:", error);
+      return res.status(500).json({
+        success: false,
+        message: "게시물 정보를 가져오는 중 오류가 발생했습니다.",
+      });
+    }
+
+    if (results.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "해당 ID의 게시물을 찾을 수 없습니다." });
+    }
+
+    const postData = results[0];
+
+    // 만약 board_img가 '001'이면 이미지 정보를 가져옵니다.
+    if (postData.board_img === '001') {
+      const imgQuery = "SELECT img.img_url FROM img INNER JOIN boardimg ON img.img_id = boardimg.img_id WHERE boardimg.board_id = ?";
+      connection.query(imgQuery, [boardId], (imgError, imgResults) => {
+        if (imgError) {
+          console.error("Error fetching image:", imgError);
+          return res.status(500).json({
+            success: false,
+            message: "이미지를 가져오는 중 오류가 발생했습니다.",
+          });
+        }
+
+        if (imgResults.length > 0) {
+          postData.img_url = imgResults[0].img_url;
+        }
+
+        // 이미지 파일을 읽어와 base64로 인코딩합니다.
+        const imgPath = path.join(uploadImgDir, postData.img_url)
+        const imageData = fs.readFileSync(imgPath);
+        const base64Image = imageData.toString('base64');
+
+        // 만약 board_file이 '001'이면 파일 정보를 가져옵니다.
+        if (postData.board_file === '001') {
+          const fileQuery = "SELECT file.file_url FROM file INNER JOIN boardfile ON file.file_id = boardfile.file_id WHERE boardfile.board_id = ?";
+          connection.query(fileQuery, [boardId], (fileError, fileResults) => {
+            if (fileError) {
+              console.error("Error fetching file:", fileError);
+              return res.status(500).json({
+                success: false,
+                message: "파일을 가져오는 중 오류가 발생했습니다.",
+              });
+            }
+
+            if (fileResults.length > 0) {
+              postData.file_url = fileResults[0].file_url;
+            }
+
+            const filePath = path.join(__dirname, postData.file_url)
+            const fileData = fs.readFileSync(filePath);
+            const base64File = fileData.toString('base64');
+
+            return res.status(200).json({ success: true, data: postData, imgData: base64Image, fileData: base64File});
+          });
+        } else {
+          return res.status(200).json({ success: true, data: postData, imgData: base64Image });
+        }
+      });
+    } else {
+      // 만약 board_file이 '001'이면 파일 정보를 가져옵니다.
+      if (postData.board_file === '001') {
+        const fileQuery = "SELECT file.file_url FROM file INNER JOIN boardfile ON file.file_id = boardfile.file_id WHERE boardfile.board_id = ?";
+        connection.query(fileQuery, [boardId], (fileError, fileResults) => {
+          if (fileError) {
+            console.error("Error fetching file:", fileError);
+            return res.status(500).json({
+              success: false,
+              message: "파일을 가져오는 중 오류가 발생했습니다.",
+            });
+          }
+
+          if (fileResults.length > 0) {
+            postData.file_url = fileResults[0].file_url;
+          }
+
+          const filePath = path.join(__dirname, postData.file_url)
+          const fileData = fs.readFileSync(filePath);
+          const base64File = fileData.toString('base64');
+
+          return res.status(200).json({ success: true, data: postData, fileData: base64File });
+        });
+      } else {
+        return res.status(200).json({ success: true, data: postData });
+      }
     }
   });
 });

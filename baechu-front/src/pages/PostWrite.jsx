@@ -12,6 +12,8 @@ import '../components/PostWrite/PostWrite.css';
 import dummyData from '../dummy/CityDummy.js';
 import categoryOptions from '../dummy/Category.js';
 
+import YoutubeApi from '../api.json';
+
 // 모달을 사용할 때 모달이 아닌 부분으로 역할하는 요소를 명시적으로 지정
 Modal.setAppElement('#root');
 
@@ -61,7 +63,7 @@ export default function PostWrite() {
 
   const handleSearch = async () => {
     // YouTube Data API 키 설정
-    const API_KEY = 'AIzaSyC9N3Djlo69a_uIH_jJcFJlXEmtti1Xv5c';
+    const API_KEY = YoutubeApi.youtube_api;
     
     // YouTube API 검색 요청
     YTSearch({ key: API_KEY, term: searchTerm }, (data) => {

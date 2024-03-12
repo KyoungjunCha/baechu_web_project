@@ -1,6 +1,5 @@
-// PostDetail.js
-
 import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import { useParams } from "react-router-dom";
 import CommentList from "../../components/CommentList/CommentList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,26 +9,43 @@ import {
   faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
 import "./PostDetail.css";
+import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
 
 const PostDetail = () => {
-  const { postId } = useParams();
+  // const { postId } = useParams();
   const [post, setPost] = useState(null);
+  const [fileData, setFileData] = useState(null);
+
+  const postId = '1';
+
+  const downloadFile = () => {
+    const url = window.URL.createObjectURL(new Blob([fileData]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'filename.ext');
+    document.body.appendChild(link);
+    link.click();
+  };
 
   useEffect(() => {
-    const dummyPost = {
-      id: postId,
-      title: "게시글 제목",
-      content: "게시글 내용",
-      likes: 10,
-      dislikes: 2,
-      timestamp: "2024-01-19T12:30:00",
-      author: {
-        username: "작성자",
-        profileImage: "URL_TO_PROFILE_IMAGE",
-      },
-    };
+    const getPostDetail = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/post/${postId}`);
+        console.log(response.data.data);
+        console.log(response.data.imgData);
+        
+        // 서버에서는 결과를 배열로 보내기 때문에 [0]을 사용하여 첫 번째 요소만 가져옴
+        setPost({ ...response.data.data, 
+          imgData: response.data.imgData, 
+          fileData: response.data.fileData }); 
 
-    setPost(dummyPost);
+        setFileData(response.data.fileData);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+  
+    getPostDetail();
   }, [postId]);
 
   return (
@@ -38,11 +54,33 @@ const PostDetail = () => {
         <div className="post">
           <div className="post-header">
             <h2>
-              {post.title}{" "}
-              <span className="post-author">{post.author.username}</span>
+              {post.board_title}{" "}
+              <span className="post-author">{post.userNickName}</span>
             </h2>
           </div>
-          <p>{post.content}</p>
+          {/* 이미지를 중앙에 정렬 */}
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <img 
+              style={{margin:'10px', width:'350px', height:'200px'}}
+              src={`data:image/jpeg;base64,${post.imgData}`} 
+              alt="게시물 이미지" 
+              className="post-image" 
+            />
+          </div>
+          {/* VideoPlayer를 사용하면서 videoUrl을 전달 */}
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <VideoPlayer videoUrl={post.youtub_url} />
+          </div>
+          <p>{post.board_detail}</p>
+          <div>
+            <a href={post.web_url} target="_blank" rel="noopener noreferrer">{post.web_url}</a>
+          </div>
+          {/* 파일 다운로드 링크 추가 */}
+          {fileData && (
+            <div>
+              <button onClick={downloadFile}>파일 다운로드</button>
+            </div>
+          )}
           <div className="post-meta">
             <div className="action-buttons">
               <button>
@@ -53,7 +91,7 @@ const PostDetail = () => {
               </button>
             </div>
             <div className="comment-meta">
-              <span className="timestamp">{post.timestamp}</span>
+              <span className="timestamp">{post.board_date}</span> {/* 게시 날짜를 보여주도록 수정 */}
             </div>
           </div>
         </div>
