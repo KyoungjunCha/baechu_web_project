@@ -51,29 +51,29 @@ const PageLogin = () => {
         <div className="LoginFormPage">
           {/* 로그인 폼 */}
           <div className="input-container">
-            <div className="icon-container">
-              <FaUser className="icon" />
-            </div>
-            <input
-              type="text"
-              placeholder="아이디"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div className="input-container">
-            <div className="icon-container">
-              <FaKey className="icon" />
-            </div>
-            <input
-              type="password"
-              placeholder="비밀번호"
+  <div className="icon-container">
+    <FaUser className="icon" />
+  </div>
+  <input
+    type="text"
+    placeholder="아이디"
+    onChange={(e) => setUsername(e.target.value)}
+  />
+</div>
+<div className="input-container">
+  <div className="icon-container">
+    <FaKey className="icon" />
+  </div>
+  <input
+    type="password"
+    placeholder="비밀번호"
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <button onClick={handleLogin}>로그인</button>
         </div>
       )}
-    </div>
+    </div> 
   );
 };
 

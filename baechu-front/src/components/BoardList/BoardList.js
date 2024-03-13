@@ -1,27 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import imageIcon from '../../images/imgy.png';
-import noImageIcon from '../../images/imgn.png';
+import axios from 'axios';
 import './BoardList.css';
+import BoardListItem from './BoardListItem';
 
 const BoardList = ({ selectedCategory }) => {
-  const [dummyData, setDummyData] = useState([]);
+  const [posts, setPosts] = useState([]); // 게시물 목록 상태 추가
   const [currentPage, setCurrentPage] = useState(1);
   const [currentTab, setCurrentTab] = useState('all');
   const [selectedLocation, setSelectedLocation] = useState('');
-
   const postsPerPage = 3;
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
 
   // 카테고리와 지역에 따라 필터링
   const filteredPosts = selectedLocation
-    ? dummyData.filter(post => post.location === selectedLocation)
+    ? posts.filter(post => post.province === selectedLocation && (selectedCategory ? post.category === selectedCategory : true))
     : selectedCategory
-    ? dummyData.filter(post => post.category === selectedCategory)
-    : dummyData;
+    ? posts.filter(post => post.category === selectedCategory)
+    : posts;
 
   // 베스트와 일반
-  const bestPosts = filteredPosts.filter(post => post.recommended > 5);
+  const bestPosts = filteredPosts.filter(post => post.likes > 5);
 
   // 현재 보여줄 포스트 선택
   const currentPosts = currentTab === 'best'
@@ -46,22 +46,36 @@ const BoardList = ({ selectedCategory }) => {
     setCurrentPage(1); // 탭 변경 시 페이지 초기화
   };
 
+  // 조회수 증가 함수
+  const increaseViews = async (id) => {
+    try {
+      await axios.put(`http://localhost:5001/boardlist/${id}/views/increase`);
+      // 조회수가 증가되었으므로 다시 데이터를 불러옴
+      const response = await axios.get('http://localhost:5001/boardlist');
+      setPosts(response.data); // 게시물 목록 업데이트
+    } catch (error) {
+      console.error('Error increasing views:', error);
+    }
+  };
+
   // 글쓰기 버튼 클릭 동작
   const handleWriteClick = () => {
     console.log(`Selected category: ${selectedCategory}, Selected location: ${selectedLocation}`);
     // 글쓰기 동작 추가
   };
 
-  // 더미 데이터 설정
   useEffect(() => {
-    setDummyData([
-      { id: 1, category: '음식', hasImage: true, title: '뼈해장국', author: '배추좋아', location: '서울', recommended: 100, views: 5, date: '2024-01-11' },
-      { id: 2, category: '음식', hasImage: false, title: '국밥집 추천드려요', author: '배추좋아', location: '경기도', recommended: 8, views: 5, date: '2024-01-07' },
-      { id: 3, category: '스포츠', hasImage: true, title: '수원 헬스장 여기다니세요!', author: '배추도사', location: '서울', recommended: 10, views: 10, date: '2024-01-08' },
-      { id: 4, category: '음식', hasImage: true, title: '분식집 추천', author: '배추좋아', location: '강원도', recommended: 2, views: 5, date: '2024-01-07' },
-      { id: 5, category: '음식', hasImage: false, title: '망포맛집 발견 ㅎㅎㅎ', author: '배추좋아', location: '경기도', recommended: 3, views: 5, date: '2024-01-07' },
-    ]);
-  }, []); // 빈 배열을 넣어 한 번만 실행되도록 설정
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5001/boardlist');
+        setPosts(response.data); // 초기 데이터로 게시물 목록 설정
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+  
+    fetchData();
+  }, []);
 
   return (
     <div className="list-container">
@@ -115,16 +129,18 @@ const BoardList = ({ selectedCategory }) => {
         </thead>
         <tbody>
           {currentPosts.map(post => (
-            <tr key={post.id}>
-              <td>{post.category}</td>
-              <td>{post.hasImage ? <img src={imageIcon} alt="이미지 첨부됨" className="board-icon" /> : <img src={noImageIcon} alt="이미지 첨부 안됨" className="board-icon" />}</td>
-              <td>{post.title}</td>
-              <td>{post.author}</td>
-              <td>{post.location}</td> {/* location 필드를 가정하여 추가 */}
-              <td>{post.recommended}</td>
-              <td>{post.views}</td>
-              <td>{post.date}</td>
-            </tr>
+            <BoardListItem
+              key={post.id}
+              category={post.category}
+              hasImage={post.hasImage}
+              title={post.title}
+              author={post.author}
+              province={post.province}
+              likes={post.likes}
+              views={post.views}
+              date={post.date}
+              increaseViews={() => increaseViews(post.id)} // 조회수 증가 함수를 전달
+            />
           ))}
         </tbody>
       </table>
@@ -147,4 +163,4 @@ const BoardList = ({ selectedCategory }) => {
   );
 };
 
-export default BoardList;  
+export default BoardList;
