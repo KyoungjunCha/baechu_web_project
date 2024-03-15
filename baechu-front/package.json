@@ -12,7 +12,11 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+<<<<<<< HEAD
     "axios": "^1.6.7",
+=======
+    "cors": "^2.8.5",
+>>>>>>> 9a7a3270481a4706762c42b6c65baebef9a5ce1f
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",

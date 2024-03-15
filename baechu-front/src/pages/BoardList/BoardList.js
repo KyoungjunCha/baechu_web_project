@@ -3,8 +3,7 @@ import imageIcon from '../../images/imgy.png';
 import noImageIcon from '../../images/imgn.png';
 import './BoardList.css';
 
-
-const BoardList = () => {
+const BestList = () => {
   const dummyData = [
     { 
       id: 1, 
@@ -25,33 +24,13 @@ const BoardList = () => {
       date: '2024-01-07' 
     },
 
-    { 
-        id: 3, 
-        category: '음식', 
-        hasImage: false, 
-        title: '국밥집 추천드려요 ', 
-        author: '배추좋아', 
-        views: 5, 
-        date: '2024-01-07' 
-      },
-      { 
-        id: 4, 
-        category: '음식', 
-        hasImage: false, 
-        title: '국밥집 추천드려요 ', 
-        author: '배추좋아', 
-        views: 5, 
-        date: '2024-01-07' 
-      },
-
 
     // 더미 데이터
   ];
 
+  // 페이지네이션
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 5;
-
-  //페이지 네이션
+  const postsPerPage = 3; // 한 페이지에 표시되는 게시물 수
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -67,7 +46,8 @@ const BoardList = () => {
 
   return (
     <div>
-      <table className="board-table">
+        <h1>베스트</h1>
+      <table className="best-table">
         <thead>
           <tr>
             <th>종류</th>
@@ -79,10 +59,10 @@ const BoardList = () => {
           </tr>
         </thead>
         <tbody>
-          {dummyData.map(post => (
+          {currentPosts.map(post => (
             <tr key={post.id}>
               <td>{post.category}</td>
-              <td>{post.hasImage ? <img src={imageIcon} alt="이미지 첨부됨" className="board-icon" /> : <img src={noImageIcon} alt="이미지 첨부 안됨" className="board-icon" />}</td>
+              <td>{post.hasImage ? <img src={imageIcon} alt="이미지 첨부됨" className="best-icon" /> : <img src={noImageIcon} alt="이미지 첨부 안됨" className="best-icon" />}</td>
               <td>{post.title}</td>
               <td>{post.author}</td>
               <td>{post.views}</td>
@@ -91,7 +71,6 @@ const BoardList = () => {
           ))}
         </tbody>
       </table>
-
 
       {/* Pagination */}
       <div className="pagination">
@@ -111,4 +90,4 @@ const BoardList = () => {
   );
 };
 
-export default BoardList;
+export default BestList;

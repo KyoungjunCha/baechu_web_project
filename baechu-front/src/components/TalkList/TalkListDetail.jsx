@@ -1,6 +1,6 @@
 import React from 'react';
 import './TalkListDetail.css';
-import imageIcon from '../../images/imgg.png';
+import imageIcon from '../../images/imgn.png';
 
 const dummyDatas = [
   {

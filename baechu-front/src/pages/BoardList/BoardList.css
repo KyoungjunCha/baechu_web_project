@@ -1,37 +1,33 @@
-  .board-table th,
-  .board-table td {
+.best-table {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    border-collapse: collapse;
+  }
+  
+  .best-table th,
+  .best-table td {
     border: 1px solid #ccc;
     padding: 8px;
     text-align: center;
   }
-
-.board-table {
-    width: 100%; 
-    max-width: 1200px; 
-    margin: 20px auto; 
-    border-collapse: collapse;
-  }
-
   
-  .board-table th {
-    background-color: #027419;
+  .best-table th {
+    background-color: #4caf50;
     color: white;
   }
   
-  .board-icon {
-    width: 30px; 
-    height: auto; 
+  .best-icon {
+    width: 30px;
+    height: auto;
   }
   
-
-
   .pagination {
     display: flex;
     justify-content: center;
     margin-top: 20px;
   }
   
-  /* Pagination buttons */
   .pagination button {
     margin: 0 5px;
     padding: 8px 12px;
@@ -43,14 +39,14 @@
     transition: background-color 0.3s ease;
   }
   
-  /* Active and hover states */
   .pagination button.active,
   .pagination button:hover {
     background-color: #ddd;
   }
   
-  /* Disabled state for previous and next buttons */
+  /* 비활성화된 버튼 스타일 */
   .pagination button[disabled] {
-    cursor: not-allowed;
+    cursor: not-allowed; 
     opacity: 0.5;
   }
+  

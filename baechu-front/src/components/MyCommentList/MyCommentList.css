@@ -1,0 +1,66 @@
+.myComment{
+    margin: 20px auto;
+    max-width: 700px;
+    margin-top: 10px;
+    margin-bottom: 500px;
+
+    background-color: white;
+    border: 1px solid #5c5353;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.myCommentHeader{
+    padding-left: 10px;
+    background-color: #2675cf;
+    margin-top: 20px;
+
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+
+    .myCommentTotalfont{
+        margin-left: 10px;
+    
+        color: white;
+        font-size: 25px;
+    }
+}
+
+.myCommentList{
+    margin-top: 10px;
+    margin-left: 50px;
+    margin-bottom: 10px;
+
+    left: 50%;
+
+    display: flex;
+    align-items: center;
+    /* border: 1px solid rgb(32, 32, 32); */
+
+    .myCommentTitle{
+        height: auto;
+        width: 300px;
+        padding: 5px;
+    
+        border: 1px solid rgb(32, 32, 32);
+    }
+    
+    .myCommentCreatDate{
+        word-spacing: 20px;
+    }
+    
+    .myCommentCheckBox{
+        width: 20px;
+        height: 20px;
+    }
+    
+    .myCommentIcon{
+        width: 80px;
+        height: 80px;
+    }
+}
+
