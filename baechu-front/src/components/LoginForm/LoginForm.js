@@ -12,7 +12,7 @@ const LoginForm = () => {
     try {
       const response = await axios.post("http://localhost:5000/login", {
         userNickName: username,
-        password,
+        password
       });
 
       if (response.data.success) {
@@ -41,7 +41,7 @@ const LoginForm = () => {
           type="text"
           placeholder="Username"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={e => setUsername(e.target.value)}
         />
       </div>
       <div className="icon-container">
@@ -52,7 +52,7 @@ const LoginForm = () => {
           type="password"
           placeholder="Password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={e => setPassword(e.target.value)}
         />
       </div>
       <div className="links">
