@@ -619,6 +619,366 @@ app.delete("/commentAlarm", (req, res) => {
   });
 });
 
+app.get("/postcomment/:postId", (req, res) => {
+  const boardId = req.params.postId;
+
+  if (!boardId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "유효하지 않은 페이지입니다." });
+  }
+
+  const query =
+    "SELECT " +
+    "comment.comment_id, " +
+    "comment.board_id , " +
+    "comment.user_id, " +
+    "comment.comment_detail, " +
+    "comment.comment_date, " +
+    "comment.comment_img, " +
+    "comment.parents_id, " +
+    "user.userNickName, " +
+    "SUM(CASE WHEN commentlike.like_status = '001' THEN 1 ELSE 0 END) AS like_count, " +
+    "SUM(CASE WHEN commentlike.like_status = '000' THEN 1 ELSE 0 END) AS dislike_count " +
+    "FROM comment " +
+    "LEFT JOIN commentlike ON comment.comment_id = commentlike.comment_id " +
+    "LEFT JOIN user ON comment.user_id = user.user_id " +
+    "WHERE comment.board_id = ? AND (comment.parents_id = 0 OR comment.parents_id IS NULL) " +
+    "GROUP BY " +
+    "comment.comment_id, " +
+    "comment.user_id, " +
+    "comment.comment_detail, " +
+    "comment.comment_date, " +
+    "comment.comment_img, " +
+    "comment.parents_id";
+
+  const values = [boardId];
+
+  connection.query(query, values, (error, results) => {
+    if (error) {
+      console.error("Error fetching post details:", error);
+      return res.status(500).json({
+        success: false,
+        message: "게시물 정보를 가져오는 중 오류가 발생했습니다.",
+      });
+    }
+
+    if (results.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "해당 ID의 게시물을 찾을 수 없습니다." });
+    }
+
+    // 이미지를 가져오는 부분
+    const promises = results.map(comment => {
+      if (comment.comment_img === '001') {
+        return new Promise((resolve, reject) => {
+          const imgQuery = "SELECT img.img_url FROM img INNER JOIN commentimg ON img.img_id = commentimg.img_id WHERE commentimg.comment_id = ?";
+          connection.query(imgQuery, [comment.comment_id], (imgError, imgResults) => {
+            if (imgError) {
+              console.error("Error fetching image:", imgError);
+              reject(imgError);
+            }
+
+            if (imgResults.length > 0) {
+              comment.img_url = imgResults[0].img_url;
+            }
+            
+            // console.log(comment.img_url);
+
+            // 이미지 파일을 읽어와 base64로 인코딩합니다.
+            const imgPath = path.join(uploadImgDir, comment.img_url);
+            const imageData = fs.readFileSync(imgPath);
+            const base64Image = imageData.toString('base64');
+
+            comment.imgData = base64Image;
+            resolve(comment);
+          });
+        });
+      } else {
+        return Promise.resolve(comment);
+      }
+    });
+
+    Promise.all(promises)
+      .then(commentData => {
+        return res.status(200).json({ success: true, data: commentData });
+      })
+      .catch(error => {
+        console.error("Error fetching image:", error);
+        return res.status(500).json({
+          success: false,
+          message: "이미지를 가져오는 중 오류가 발생했습니다.",
+        });
+      });
+  });
+});
+
+app.post("/commentLike/:commentId", (req, res) => {
+  const { comment_id,user_id } = req.body;
+
+  // commentlike 테이블에서 해당 comment_id와 user_id가 동시에 존재하는지 확인하는 쿼리
+  const checkQuery = 'SELECT * FROM commentlike WHERE comment_id = ? AND user_id = ?';
+  connection.query(checkQuery, [comment_id, user_id], (checkError, checkResults) => {
+    if (checkError) {
+      console.error('Error checking like status:', checkError);
+      return res.status(500).json({ success: false, message: '좋아요 상태를 확인하는 중 오류가 발생했습니다.' });
+    }
+
+    // 이미 존재하는 경우
+    if (checkResults.length > 0) {
+      return res.status(200).json({ success: false, message: '이미 좋아요를 눌렀습니다.' });
+    } else {
+      // 존재하지 않는 경우, commentlike 테이블에 좋아요 상태 추가하는 쿼리
+      const insertQuery = 'INSERT INTO commentlike (comment_id, user_id, like_status) VALUES (?, ?, 1)';
+      connection.query(insertQuery, [comment_id, user_id], (insertError, insertResults) => {
+        if (insertError) {
+          console.error('Error adding like:', insertError);
+          return res.status(500).json({ success: false, message: '좋아요를 추가하는 중 오류가 발생했습니다.' });
+        }
+        return res.status(200).json({ success: true, message: '좋아요가 추가되었습니다.' });
+      });
+    }
+  });
+});
+
+app.post("/commentDislike/:commetId",(req,res) =>{
+  const { comment_id,user_id } = req.body;
+
+  // commentlike 테이블에서 해당 comment_id와 user_id가 동시에 존재하는지 확인하는 쿼리
+  const checkQuery = 'SELECT * FROM commentlike WHERE comment_id = ? AND user_id = ?';
+  connection.query(checkQuery, [comment_id, user_id], (checkError, checkResults) => {
+    if (checkError) {
+      console.error('Error checking like status:', checkError);
+      return res.status(500).json({ success: false, message: '좋아요 상태를 확인하는 중 오류가 발생했습니다.' });
+    }
+
+    // 이미 존재하는 경우
+    if (checkResults.length > 0) {
+      return res.status(200).json({ success: false, message: '이미 좋아요를 눌렀습니다.' });
+    } else {
+      // 존재하지 않는 경우, commentlike 테이블에 좋아요 상태 추가하는 쿼리
+      const insertQuery = 'INSERT INTO commentlike (comment_id, user_id, like_status) VALUES (?, ?, 0)';
+      connection.query(insertQuery, [comment_id, user_id], (insertError, insertResults) => {
+        if (insertError) {
+          console.error('Error adding like:', insertError);
+          return res.status(500).json({ success: false, message: '좋아요를 추가하는 중 오류가 발생했습니다.' });
+        }
+        return res.status(200).json({ success: true, message: '좋아요가 추가되었습니다.' });
+      });
+    }
+  });
+});
+
+app.get("/commentReplies/:postId/:commentId", (req, res) => {
+  const boardId = req.params.postId;
+  const commentId = req.params.commentId;
+
+  if (!boardId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "유효하지 않은 페이지입니다." });
+  }
+
+  const query =
+    "SELECT " +
+    "comment.comment_id, " +
+    "comment.board_id , " +
+    "comment.user_id, " +
+    "comment.comment_detail, " +
+    "comment.comment_date, " +
+    "comment.comment_img, " +
+    "comment.parents_id, " +
+    "user.userNickName, " +
+    "SUM(CASE WHEN commentlike.like_status = '001' THEN 1 ELSE 0 END) AS like_count, " +
+    "SUM(CASE WHEN commentlike.like_status = '000' THEN 1 ELSE 0 END) AS dislike_count " +
+    "FROM comment " +
+    "LEFT JOIN commentlike ON comment.comment_id = commentlike.comment_id " +
+    "LEFT JOIN user ON comment.user_id = user.user_id " +
+    "WHERE comment.board_id = ? AND comment.parents_id = ? " +
+    "GROUP BY " +
+    "comment.comment_id, " +
+    "comment.user_id, " +
+    "comment.comment_detail, " +
+    "comment.comment_date, " +
+    "comment.comment_img, " +
+    "comment.parents_id";
+
+  const values = [boardId, commentId];
+
+  connection.query(query, values, (error, results) => {
+    if (error) {
+      console.error("Error fetching post details:", error);
+      return res.status(500).json({
+        success: false,
+        message: "게시물 정보를 가져오는 중 오류가 발생했습니다.",
+      });
+    }
+
+    if (results.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "해당 ID의 게시물을 찾을 수 없습니다." });
+    }
+
+    // 이미지를 가져오는 부분
+    const promises = results.map(comment => {
+      if (comment.comment_img === '001') {
+        return new Promise((resolve, reject) => {
+          const imgQuery = "SELECT img.img_url FROM img INNER JOIN commentimg ON img.img_id = commentimg.img_id WHERE commentimg.comment_id = ?";
+          connection.query(imgQuery, [comment.comment_id], (imgError, imgResults) => {
+            if (imgError) {
+              console.error("Error fetching image:", imgError);
+              reject(imgError);
+            }
+
+            if (imgResults.length > 0) {
+              comment.img_url = imgResults[0].img_url;
+            }
+
+            // 이미지 파일을 읽어와 base64로 인코딩합니다.
+            const imgPath = path.join(uploadImgDir, comment.img_url);
+            const imageData = fs.readFileSync(imgPath);
+            const base64Image = imageData.toString('base64');
+
+            comment.imgData = base64Image;
+            resolve(comment);
+          });
+        });
+      } else {
+        return Promise.resolve(comment);
+      }
+    });
+
+    Promise.all(promises)
+      .then(commentData => {
+        return res.status(200).json({ success: true, data: commentData });
+      })
+      .catch(error => {
+        console.error("Error fetching image:", error);
+        return res.status(500).json({
+          success: false,
+          message: "이미지를 가져오는 중 오류가 발생했습니다.",
+        });
+      });
+  });
+});
+
+app.post("/commentWrite", async (req, res) => {
+  console.log("req.body :", req.body);
+  let { board_id, user_id, comment_detail, parents_id } = req.body;
+
+  if(parents_id == '0'){
+    parents_id = null;
+  }
+
+  let imgId = "";
+  let commentId = "";
+
+  try {
+    const comment_date = new Date().toISOString().slice(0, 19).replace("T", " ");
+
+    // 유효성 검사 추가
+    if (!comment_detail || comment_detail.trim() === "") {
+      return res
+        .status(400)
+        .json({ success: false, message: "댓글을 입력하세요." });
+    }
+
+    let comment_img = "0"; // 이미지 유무를 나타내는 값 초기화
+    let comment_img_url = ""; // 이미지 URL 초기화
+
+    // 이미지 파일이 전송되었을 경우에만 처리
+    if (req.files && req.files.length > 0) {
+      // console.log("이미지 전송됨");
+
+      // 디렉토리가 없으면 생성
+      const uploadImgDir = __dirname + '/uploads';
+      if (!fs.existsSync(uploadImgDir)) {
+        fs.mkdirSync(uploadImgDir);
+      }
+
+      // 이미지 파일 저장 및 URL 생성
+      for (const file of req.files) {
+        if (file.fieldname === "image") {
+          // console.log("이미지 처리 중...");
+
+          const imgPath = path.join(uploadImgDir, file.originalname);
+
+          // 이미지 파일 저장
+          fs.writeFileSync(imgPath, file.buffer);
+
+          // 이미지 URL 생성
+          comment_img_url = `${file.originalname}`;
+
+          // 이미지가 존재함을 나타내는 값 설정
+          comment_img = "1";
+
+          // 이미지 파일의 경로를 데이터베이스에 저장
+          const queryImg = "INSERT INTO img (img_url) VALUES (?)";
+          await new Promise((resolve, reject) => {
+            connection.query(queryImg, [comment_img_url], (err, result) => {
+              if (err) {
+                console.error("Error saving image:", err);
+                reject(err);
+              } else {
+                console.log("Image saved successfully.");
+                imgId = result.insertId;
+                resolve();
+              }
+            });
+          });
+        }
+      }
+    } else {
+      console.log("이미지 또는 파일이 전송되지 않았습니다.");
+    }
+
+    let query = "INSERT INTO comment (board_id, user_id, comment_detail, comment_img, comment_date, parents_id) VALUES (?, ?, ?, ?, ?, ?)";
+    let result = [board_id, user_id, comment_detail, comment_img, comment_date, parents_id];
+    
+    await new Promise((resolve, reject) => {
+      connection.query(query, result, (err, result) => {
+        if (err) {
+          console.error("Error saving comment:", err);
+          reject(err);
+        } else {
+          console.log("Comment saved successfully.");
+          commentId = result.insertId;
+          resolve();
+        }
+      });
+    });
+
+    if (comment_img = '1') {
+      // 이미지와 댓글의 관계를 나타내는 commentimg 테이블에 추가
+      const queryCommentImg = "INSERT INTO commentimg (comment_id, img_id) VALUES (?, ?)";
+      await new Promise((resolve, reject) => {
+        connection.query(queryCommentImg, [commentId, imgId], (err, result) => {
+          if (err) {
+            console.error("Error adding image-comment relationship:", err);
+            reject(err);
+          } else {
+            console.log("Image-comment relationship added successfully.");
+            resolve();
+          }
+        });
+      });
+    }
+
+    return res.status(201).json({
+      success: true,
+      message: "댓글 작성이 성공적으로 완료되었습니다.",
+    });
+  } catch (error) {
+    console.error("Error writing comment:", error);
+    return res.status(500).json({
+      success: false,
+      message: "댓글 작성 중 오류가 발생했습니다.",
+    });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
