@@ -6,10 +6,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faThumbsUp,
   faThumbsDown,
-  faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
 import "./PostDetail.css";
 import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
+import CommentInput from "../../components/CommentInput/CommentInput";
 
 const PostDetail = () => {
   // const { postId } = useParams();
@@ -17,6 +17,7 @@ const PostDetail = () => {
   const [fileData, setFileData] = useState(null);
 
   const postId = '1';
+  const commentId = '0';
 
   const downloadFile = () => {
     const url = window.URL.createObjectURL(new Blob([fileData]));
@@ -31,8 +32,6 @@ const PostDetail = () => {
     const getPostDetail = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/post/${postId}`);
-        console.log(response.data.data);
-        console.log(response.data.imgData);
         
         // 서버에서는 결과를 배열로 보내기 때문에 [0]을 사용하여 첫 번째 요소만 가져옴
         setPost({ ...response.data.data, 
@@ -53,9 +52,10 @@ const PostDetail = () => {
       {post && (
         <div className="post">
           <div className="post-header">
+            <div style={{ margin: '10px', textAlign: 'right' }}>{post.province}</div>
             <h2>
               {post.board_title}{" "}
-              <span className="post-author">{post.userNickName}</span>
+              <div className="post-author">{post.userNickName}</div>
             </h2>
           </div>
           {/* 이미지를 중앙에 정렬 */}
@@ -76,11 +76,11 @@ const PostDetail = () => {
             <a href={post.web_url} target="_blank" rel="noopener noreferrer">{post.web_url}</a>
           </div>
           {/* 파일 다운로드 링크 추가 */}
-          {fileData && (
+          {/* {fileData && (
             <div>
               <button onClick={downloadFile}>파일 다운로드</button>
             </div>
-          )}
+          )} */}
           <div className="post-meta">
             <div className="action-buttons">
               <button>
@@ -94,6 +94,7 @@ const PostDetail = () => {
               <span className="timestamp">{post.board_date}</span> {/* 게시 날짜를 보여주도록 수정 */}
             </div>
           </div>
+          <CommentInput postId={postId} commentId={commentId}/>
         </div>
       )}
       <CommentList postId={postId} />

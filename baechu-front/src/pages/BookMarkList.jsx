@@ -19,7 +19,7 @@ export default function BookMarkList() {
         const response = await axios.get('http://localhost:3000/bookMarkList', {
           params: { userId },
         });
-        console.log(response.data.data);
+        // console.log(response.data.data);
         
         setBookMarks(response.data.data);
       } catch (error) {

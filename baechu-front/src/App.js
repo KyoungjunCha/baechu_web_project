@@ -61,7 +61,7 @@ const App = () => {
             <Chat />
           </div> */}
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </Router>
   );

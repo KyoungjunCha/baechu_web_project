@@ -262,13 +262,11 @@ export default function PostWrite() {
               <button onClick={handleUrlSubmit}>확인</button>
             </div>
           </Modal>
-
           {/* URL 입력 버튼 */}
           <div className='urlLink'>
             <button className='url' onClick={() => setUrlModalIsOpen(true)}>URL</button>
           </div>
         </div>
-        
         <div className='documentLink'>
           <label htmlFor="documentUpload">
             <img src={postIcon} alt='파일 업로드' className="board-img" />
