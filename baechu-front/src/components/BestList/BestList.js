@@ -11,7 +11,7 @@ const BestList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/bestlist');
+        const response = await axios.get('http://localhost:5000/bestlist');
         setPosts(response.data);
       } catch (error) {
         console.error('Error fetching posts:', error);
@@ -33,7 +33,7 @@ const BestList = () => {
   };
 
   const increaseViews = async (id) => {
-    try { 
+    try {
       await axios.put(`http://localhost:5001/bestlist/${id}/views/increase`);
       // 조회수가 증가되었으므로 다시 데이터를 불러옴
       const response = await axios.get('http://localhost:5001/bestlist');

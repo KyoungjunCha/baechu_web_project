@@ -17,8 +17,8 @@ const BoardList = ({ selectedCategory }) => {
   const filteredPosts = selectedLocation
     ? posts.filter(post => post.province === selectedLocation && (selectedCategory ? post.category === selectedCategory : true))
     : selectedCategory
-    ? posts.filter(post => post.category === selectedCategory)
-    : posts;
+      ? posts.filter(post => post.category === selectedCategory)
+      : posts;
 
   // 베스트와 일반
   const bestPosts = filteredPosts.filter(post => post.likes > 5);
@@ -51,7 +51,7 @@ const BoardList = ({ selectedCategory }) => {
     try {
       await axios.put(`http://localhost:5001/boardlist/${id}/views/increase`);
       // 조회수가 증가되었으므로 다시 데이터를 불러옴
-      const response = await axios.get('http://localhost:5001/boardlist');
+      const response = await axios.get('http://localhost:5000/boardlist');
       setPosts(response.data); // 게시물 목록 업데이트
     } catch (error) {
       console.error('Error increasing views:', error);
@@ -67,13 +67,13 @@ const BoardList = ({ selectedCategory }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/boardlist');
+        const response = await axios.get('http://localhost:5000/boardlist');
         setPosts(response.data); // 초기 데이터로 게시물 목록 설정
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-  
+
     fetchData();
   }, []);
 
@@ -96,7 +96,7 @@ const BoardList = ({ selectedCategory }) => {
             </option>
           ))}
         </select>
-        
+
         {/* 추가: 글쓰기 버튼 */}
         <button onClick={handleWriteClick} className="write-button">
           글쓰기
